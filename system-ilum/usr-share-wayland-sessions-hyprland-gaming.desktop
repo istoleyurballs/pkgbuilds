@@ -1,8 +1,7 @@
 [Desktop Entry]
-Name=Hyprland (Gaming, uwsm-managed)
+Name=Hyprland (Gaming)
 Comment=An intelligent dynamic tiling Wayland compositor
-Exec=uwsm start -e -D Hyprland /usr/bin/start-hyprland -- --config %h/.config/hypr/hyprland-gaming.conf
-TryExec=uwsm
+Exec=/usr/bin/start-hyprland -- --config %h/.config/hypr/hyprland-gaming.conf
 DesktopNames=Hyprland
 Type=Application
 Keywords=tiling;wayland;compositor;

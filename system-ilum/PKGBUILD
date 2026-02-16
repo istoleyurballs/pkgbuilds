@@ -1,6 +1,6 @@
 pkgbase=system-ilum
 pkgname=(system-ilum-skeleton system-ilum-base system-ilum-utils system-ilum-full)
-pkgver=1.4.3
+pkgver=1.4.4
 pkgrel=1
 
 pkgdesc='System configuration'
@@ -28,7 +28,9 @@ source=(
   'etc-default-grub.patch'
   'etc-mkinitcpio.conf.patch'
   'usr-share-wayland-sessions-hyprland-gaming.desktop'
+  'usr-share-wayland-sessions-hyprland-gaming-uwsm.desktop'
   'usr-share-wayland-sessions-hyprland-tv-hdr.desktop'
+  'usr-share-wayland-sessions-hyprland-tv-hdr-uwsm.desktop'
 )
 
 package_system-ilum-skeleton() {
@@ -164,7 +166,9 @@ package_system-ilum-full() {
 
   # Install custom hyprland sessions
   install -Dm0644 usr-share-wayland-sessions-hyprland-gaming.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming.desktop
+  install -Dm0644 usr-share-wayland-sessions-hyprland-gaming-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming-uwsm.desktop
   install -Dm0644 usr-share-wayland-sessions-hyprland-tv-hdr.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr.desktop
+  install -Dm0644 usr-share-wayland-sessions-hyprland-tv-hdr-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr-uwsm.desktop
 }
 
 sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
@@ -185,5 +189,7 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             'de92f16c90487ad558831811360d2d4ff1764b9464f8d7f40db21736232e9ab1'
             '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
             'aae18e369ed76e0a1aaeb7c333349b7dfb89923dc961c9fbf493a356b5da0059'
-            'a5e29662b1528c7b858dcaebf3594bdd2f2ccb8b2e9b910c308bd66948034058'
-            '1a7bd79c1db921f98a5f3a1b691d9fba559cd6a4d37cdbe09307e42cddb7878c')
+            '0f6aaca54c65eb01ca837e119d89a0bc56a908f06d9d7e4abfab16df921ba078'
+            '0d8be9e4ff9faf6b550dc821bf26a1ebffc8186ddcf7830ceffb9574c8454308'
+            'be41cfff88d9ee1ed705bd5aee9714c50e91579ab9c465457e930a3abcb9482b'
+            '87ceee17f47f0adf1e4a8a8a4ca0f732eb74f8799e6bf9905ec07cc3f7ba3522')
