@@ -1,6 +1,6 @@
 pkgbase=system-ilum
 pkgname=(system-ilum-skeleton system-ilum-base system-ilum-utils system-ilum-full)
-pkgver=1.4.2
+pkgver=1.4.3
 pkgrel=1
 
 pkgdesc='System configuration'
@@ -185,5 +185,5 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             'de92f16c90487ad558831811360d2d4ff1764b9464f8d7f40db21736232e9ab1'
             '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
             'aae18e369ed76e0a1aaeb7c333349b7dfb89923dc961c9fbf493a356b5da0059'
-            '17244404789e2520abdc9129680e7ad2b32d7593c0c3bd5497147e78a7a1269b'
-            'aa8b0705dcca3d4dd158fa9194340baa0af0e7aa4831f2efd1bf14089ea0c9c7')
+            'a5e29662b1528c7b858dcaebf3594bdd2f2ccb8b2e9b910c308bd66948034058'
+            '1a7bd79c1db921f98a5f3a1b691d9fba559cd6a4d37cdbe09307e42cddb7878c')
