@@ -1,0 +1,30 @@
+pkgname=archpatch-git
+_pkgname=archpatch
+pkgver=0.1.0.r0.gdb6c77b
+pkgrel=1
+pkgdesc='uwu'
+arch=('i686' 'x86_64' 'arm' 'armv7h' 'aarch64')
+url=https://github.com/istoleyurballs/archpatch
+license=('GPL-3.0-or-later')
+
+depends=('pacman' 'pacutils' 'libalpm.so')
+makedepens=('git' 'cargo')
+
+source=('git+https://github.com/istoleyurballs/archpatch.git')
+sha256sums=('SKIP')
+
+# Straight from https://wiki.archlinux.org/title/VCS_package_guidelines
+pkgver() {
+  cd "$_pkgname"
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$_pkgname"
+  cargo build --release
+}
+
+package() {
+  cd "$srcdir/$_pkgname"
+  install -Dm0755 target/release/archpatch "$pkgdir/usr/bin/archpatch"
+}
