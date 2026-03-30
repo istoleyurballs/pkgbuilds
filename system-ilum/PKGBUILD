@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.0.3
+pkgver=2.0.4
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -45,15 +45,15 @@ depends=(
 )
 
 source=(
-  'etc-hostname'
+  'hostname'
   'ilum-grub.nu'
-  'etc-ly-config.ini.patch'
+  'ly-config.ini.patch'
   'etc-default-grub.patch'
-  'etc-mkinitcpio.conf.patch'
-  'usr-share-wayland-sessions-hyprland-gaming.desktop'
-  'usr-share-wayland-sessions-hyprland-gaming-uwsm.desktop'
-  'usr-share-wayland-sessions-hyprland-tv-hdr.desktop'
-  'usr-share-wayland-sessions-hyprland-tv-hdr-uwsm.desktop'
+  'mkinitcpio.conf.patch'
+  'hyprland-gaming.desktop'
+  'hyprland-gaming-uwsm.desktop'
+  'hyprland-tv-hdr.desktop'
+  'hyprland-tv-hdr-uwsm.desktop'
   'ilum-flatpak.nu'
 )
 install='system-ilum.install'
@@ -74,21 +74,21 @@ package() {
   mkdir -p -m 777 "$pkgdir"/mnt/stuff
 
   # Basic stuff
-  install -Dm0644 etc-hostname "$pkgdir"/etc/hostname
+  install -Dm0644 hostname "$pkgdir"/etc/hostname
 
   # Grub
   install -Dm0755 ilum-grub.nu "$pkgdir"/usr/bin/ilum-grub
 
   # Patches
   install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/archpatch/patches/etc-default-grub.patch
-  install -Dm0644 etc-mkinitcpio.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-mkinitcpio.conf.patch
-  install -Dm0644 etc-ly-config.ini.patch "$pkgdir"/usr/share/archpatch/patches/etc-ly-config.ini.patch
+  install -Dm0644 mkinitcpio.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-mkinitcpio.conf.patch
+  install -Dm0644 ly-config.ini.patch "$pkgdir"/usr/share/archpatch/patches/etc-ly-config.ini.patch
 
   # Install custom hyprland sessions
-  install -Dm0644 usr-share-wayland-sessions-hyprland-gaming.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming.desktop
-  install -Dm0644 usr-share-wayland-sessions-hyprland-gaming-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming-uwsm.desktop
-  install -Dm0644 usr-share-wayland-sessions-hyprland-tv-hdr.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr.desktop
-  install -Dm0644 usr-share-wayland-sessions-hyprland-tv-hdr-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr-uwsm.desktop
+  install -Dm0644 hyprland-gaming.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming.desktop
+  install -Dm0644 hyprland-gaming-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming-uwsm.desktop
+  install -Dm0644 hyprland-tv-hdr.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr.desktop
+  install -Dm0644 hyprland-tv-hdr-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr-uwsm.desktop
 
   # Flatpak
   install -Dm0755 ilum-flatpak.nu "$pkgdir"/usr/bin/ilum-flatpak
