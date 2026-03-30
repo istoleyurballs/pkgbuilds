@@ -1,6 +1,6 @@
 pkgname=system-ilum
-pkgver=2.0.2
-pkgrel=4
+pkgver=2.0.3
+pkgrel=1
 
 pkgdesc='System configuration for ilum'
 url='https://github.com/istoleyurballs/pkgbuilds'
@@ -30,11 +30,11 @@ depends=(
   # Notification daemon
   'dunst'
   # Base apps
-  'rofi-wayland' 'alacritty' 'ranger' 'feh' 'mpv' 'firefox'
+  'rofi-wayland' 'alacritty' 'ranger' 'feh' 'mpv' 'firefox' 'calibre'
   # Sound
   'pipewire' 'wireplumber' 'pipewire-pulse' 'pavucontrol'
   # External apps stuff
-  'nix' 'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'k9s' 'kubectl'
+  'nix' 'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'dive' 'k9s' 'kubectl'
   # Steam
   'steam' 'lib32-nvidia-utils' 'lib32-systemd'
   # Fonts
