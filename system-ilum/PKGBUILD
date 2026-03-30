@@ -1,6 +1,6 @@
 pkgname=system-ilum
-pkgver=2.0.0
-pkgrel=2
+pkgver=2.0.1
+pkgrel=1
 
 pkgdesc='System configuration for ilum'
 url='https://github.com/istoleyurballs/pkgbuilds'
@@ -13,6 +13,7 @@ depends=(
 
   # NVIDIA Drivers
   'nvidia-open' 'nvidia-utils' 'libva-nvidia-driver'
+  'nvidia-settings'
 
   # = Destkop setup
   # Display Manager
@@ -33,7 +34,7 @@ depends=(
   # Sound
   'pipewire' 'wireplumber' 'pipewire-pulse' 'pavucontrol'
   # External apps stuff
-  'nix' 'flatpak' 'docker' 'k9s' 'kubectl'
+  'nix' 'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'k9s' 'kubectl'
   # Steam
   'steam' 'lib32-nvidia-utils' 'lib32-systemd'
   # Fonts
@@ -70,9 +71,9 @@ package() {
   mkdir -p "$pkgdir"/nix
   mkdir -p "$pkgdir"/swap
   mkdir -p "$pkgdir"/mnt/rootfs
-  mkdir -p "$pkgdir"/mnt/fastass
+  mkdir -p -m 777 "$pkgdir"/mnt/fastass
   mkdir -p -m 777 "$pkgdir"/mnt/lucastrunk
-  mkdir -p "$pkgdir"/mnt/stuff
+  mkdir -p -m 777 "$pkgdir"/mnt/stuff
 
   # Basic stuff
   install -Dm0644 etc-hostname "$pkgdir"/etc/hostname
