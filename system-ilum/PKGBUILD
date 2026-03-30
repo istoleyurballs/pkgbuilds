@@ -43,8 +43,6 @@ depends=(
   'nwg-look' 'papirus-icon-theme' 'brightnessctl' 'wev'
   'vulkan-caps-viewer-wayland'
 )
-conflicts=('system-ilum-full')
-replaces=('system-ilum-full')
 
 source=(
   'etc-hostname'
