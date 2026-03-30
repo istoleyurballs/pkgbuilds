@@ -1,12 +1,13 @@
 pkgname=archpatch-git
 _pkgname=archpatch
-pkgver=0.1.0.r0.gdb6c77b
-pkgrel=1
-pkgdesc='uwu'
+pkgrel=2
+pkgdesc='Utility to apply patch on top of pacman owned configuration files'
 arch=('i686' 'x86_64' 'arm' 'armv7h' 'aarch64')
 url=https://github.com/istoleyurballs/archpatch
 license=('GPL-3.0-or-later')
 
+provides=('archpatch')
+conflicts=('archpatch')
 depends=('pacman' 'pacutils' 'libalpm.so')
 makedepens=('git' 'cargo')
 
