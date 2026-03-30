@@ -1,7 +1,7 @@
 pkgbase=system-ilum
 pkgname=(system-ilum-skeleton system-ilum-base system-ilum-full)
 pkgver=1.5.0
-pkgrel=1
+pkgrel=2
 
 pkgdesc='System configuration'
 url='https://github.com/istoleyurballs/pkgbuilds'
@@ -152,7 +152,6 @@ package_system-ilum-full() {
   install='system-ilum-full.install'
 
   # Additionnal patches
-  install -Dm0644 pacman-hook-ilum-full-patch.hook "$pkgdir"/usr/share/libalpm/hooks/ilum-full-patch.hook
   install -Dm0644 etc-ly-config.ini.patch "$pkgdir"/usr/share/ilum/patches/etc-ly-config.ini.patch
 
   # Install custom hyprland sessions
