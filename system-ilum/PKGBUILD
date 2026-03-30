@@ -1,6 +1,6 @@
 pkgname=system-ilum
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 
 pkgdesc='System configuration for ilum'
 url='https://github.com/istoleyurballs/pkgbuilds'
@@ -76,13 +76,13 @@ package() {
   # Basic stuff
   install -Dm0644 etc-hostname "$pkgdir"/etc/hostname
 
-  # Patches
-  install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/ilum/patches/etc-default-grub.patch
-  install -Dm0644 etc-mkinitcpio.conf.patch "$pkgdir"/usr/share/ilum/patches/etc-mkinitcpio.conf.patch
-  install -Dm0644 etc-ly-config.ini.patch "$pkgdir"/usr/share/ilum/patches/etc-ly-config.ini.patch
-
   # Grub
   install -Dm0755 ilum-grub.nu "$pkgdir"/usr/bin/ilum-grub
+
+  # Patches
+  install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/archpatch/patches/etc-default-grub.patch
+  install -Dm0644 etc-mkinitcpio.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-mkinitcpio.conf.patch
+  install -Dm0644 etc-ly-config.ini.patch "$pkgdir"/usr/share/archpatch/patches/etc-ly-config.ini.patch
 
   # Install custom hyprland sessions
   install -Dm0644 usr-share-wayland-sessions-hyprland-gaming.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming.desktop

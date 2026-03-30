@@ -1,6 +1,6 @@
 pkgname=system-base
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 
 pkgdesc='System configuration base'
 url='https://github.com/istoleyurballs/pkgbuilds'
@@ -52,6 +52,7 @@ install='system-base.install'
 
 package() {
   # Basic stuff
+  mkdir -p "$pkgdir"/etc
   ln -sf ../usr/share/zoneinfo/Europe/Paris "$pkgdir"/etc/localtime
   install -Dm0644 etc-vconsole.conf "$pkgdir"/etc/vconsole.conf
   install -Dm0644 etc-locale.conf "$pkgdir"/etc/locale.conf
@@ -69,12 +70,10 @@ package() {
   install -Dm0644 etc-pacreport.conf "$pkgdir"/etc/pacreport.conf
 
   # Patches setup
-  install -Dm0644 usr-share-libalpm-hooks-archpatch-on-update.hook "$pkgdir/usr/share/libalpm/hooks/archpatch-on-update.hook"
-  install -Dm0644 etc-pacman.conf.patch "$pkgdir"/usr/share/ilum/patches/etc-pacman.conf.patch
-  install -Dm0644 etc-xdg-reflector-reflector.conf.patch "$pkgdir"/usr/share/ilum/patches/etc-xdg-reflector-reflector.conf.patch
-  install -Dm0644 etc-locale.gen.patch "$pkgdir"/usr/share/ilum/patches/etc-locale.gen.patch
-  install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/ilum/patches/etc-default-grub.patch
-  install -Dm0644 etc-mkinitcpio.conf.patch "$pkgdir"/usr/share/ilum/patches/etc-mkinitcpio.conf.patch
+  install -Dm0644 etc-locale.gen.patch "$pkgdir"/usr/share/archpatch/patches/etc-locale.gen.patch
+  install -Dm0644 etc-pacman.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-pacman.conf.patch
+  install -Dm0644 etc-xdg-reflector-reflector.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-xdg-reflector-reflector.conf.patch
+  install -Dm0644 usr-share-libalpm-hooks-archpatch-on-update.hook "$pkgdir"/usr/share/libalpm/hooks/archpatch-on-update.hook
 }
 
 sha256sums=('2c09b43e51de87a82ff5eeb1c599ce25800b8d34810f14044bf73644e9f7b742'
