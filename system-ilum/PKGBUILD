@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.0.4
+pkgver=2.0.5
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -34,7 +34,7 @@ depends=(
   # Sound
   'pipewire' 'wireplumber' 'pipewire-pulse' 'pavucontrol'
   # External apps stuff
-  'nix' 'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'dive' 'k9s' 'kubectl'
+  'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'dive' 'k9s' 'kubectl'
   # Steam
   'steam' 'lib32-nvidia-utils' 'lib32-systemd'
   # Fonts
@@ -60,13 +60,11 @@ install='system-ilum.install'
 
 package() {
   # Mountpoints for various things
-  # - nix
   # - swapfile
   # - root btrfs subvol
   # - other SSD
   # - homlab sshfs
   # - random stuff that need a mountpoint from time to time
-  mkdir -p "$pkgdir"/nix
   mkdir -p "$pkgdir"/swap
   mkdir -p "$pkgdir"/mnt/rootfs
   mkdir -p -m 777 "$pkgdir"/mnt/fastass
