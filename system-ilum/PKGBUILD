@@ -1,10 +1,10 @@
 pkgbase=system-ilum
-pkgname=(system-ilum-skeleton system-ilum-base system-ilum-utils system-ilum-full)
-pkgver=1.4.4
+pkgname=(system-ilum-skeleton system-ilum-base system-ilum-full)
+pkgver=1.5.0
 pkgrel=1
 
 pkgdesc='System configuration'
-url='https://github.com/icanwalkonwater/pkgbuilds'
+url='https://github.com/istoleyurballs/pkgbuilds'
 arch=('any')
 license=('MIT')
 
@@ -19,8 +19,7 @@ source=(
   'sudoers.d-allow-sudo-group'
   'etc-makepkg.d-parallel.conf'
   'etc-pacreport.conf'
-  'pacman-hook-ilum-base-patch.hook'
-  'pacman-hook-ilum-full-patch.hook'
+  'usr-share-libalpm-hooks-archpatch-on-update.hook'
   'etc-pacman.conf.patch'
   'etc-xdg-reflector-reflector.conf.patch'
   'etc-locale.gen.patch'
@@ -61,7 +60,7 @@ package_system-ilum-base() {
     'base' 'linux' 'linux-firmware' 'btrfs-progs' 'dosfstools'
     'efibootmgr' 'grub' 'os-prober'
     # Maintenance
-    'reflector' 'pacman-contrib' 'smartmontools' 'patch' 'pacutils' 'powertop'
+    'reflector' 'pacman-contrib' 'smartmontools' 'pacutils' 'powertop' 'archpatch-git'
     # AUR
     'base-devel' 'paru'
     # Dotfiles
@@ -102,8 +101,7 @@ package_system-ilum-base() {
   install -Dm0644 etc-pacreport.conf "$pkgdir"/etc/pacreport.conf
 
   # Patch setup.
-  install -Dm0755 ilum-patch.nu "$pkgdir"/usr/bin/ilum-patch
-  install -Dm0644 pacman-hook-ilum-base-patch.hook "$pkgdir"/usr/share/libalpm/hooks/ilum-base-patch.hook
+  install -Dm0644 usr-share-libalpm-hooks-archpatch-on-update.hook "$pkgdir/usr/share/libalpm/hooks/archpatch-on-update.hook"
 
   # Patches
   install -Dm0644 etc-pacman.conf.patch "$pkgdir"/usr/share/ilum/patches/etc-pacman.conf.patch
@@ -116,17 +114,10 @@ package_system-ilum-base() {
   install -Dm0755 ilum-grub.nu "$pkgdir"/usr/bin/ilum-grub
 }
 
-package_system-ilum-utils() {
-  pkgdesc='Utility scripts for ilum'
-  depends=('system-ilum-base')
-
-  install -Dm0755 ilum-report.nu "$pkgdir"/usr/bin/ilum-report
-}
-
 package_system-ilum-full() {
   pkgdesc='Full desktop for ilum'
   depends=(
-    'system-ilum-base' 'system-ilum-utils'
+    'system-ilum-base'
     # Grub
     'grub-theme-minegrub-world-selection-git'
 
@@ -180,15 +171,14 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             '23dd289c12332bb8821363bcdd2d593b3171f1d5e2c5d9b9f888dbe9e981e3d4'
             '81576086c069a2c098b510553a20c6b44b42c954d7d359991ec90db475142486'
             '6804efe7de2a1b4cebbd36d4d7c92a1b43bffc1688c98f642bfd53303bfb1f3c'
-            '59badeaff799f030f62a24e749168adc02cd0e232f145e5f288579a6234e40b2'
-            '41cf16a331f1b3cf91f22d66df7be28ffe445747ca14ca20a2fa3ce2f1ddd024'
-            '648bfb7917803a234c8b7413fd771589e40646e2d17e31bc5d2f489e6355f20f'
-            'b69640be1aa0f148678e969a675fb29f166e13d74e779c8f4d025a42a2ce3504'
-            '9d676d4e2cd9acaead7b7156c8bb25286fbeac619b84739e9e73406049402115'
-            'e9bf5423102855dc6f3eed8daff2f627bd8b1d7e490bbcbb336c08a72168b1cf'
-            'de92f16c90487ad558831811360d2d4ff1764b9464f8d7f40db21736232e9ab1'
+            'ac450f400796f2e58cba39a9eacf068dc9ef117a0892a5beb7b1480880b05d03'
+            'f6dca74924a6321e2dc2a42f0900e867ab73581386ccf72a27eb960206175f46'
+            '8fe0bc253485fd6bed73127e0404737f3d38906748c5042052f3d51f478b6629'
+            '3edec102243a7d9316c226547310b657e8d97eee47739af746aea2021721bad2'
+            'e295508f30f24ec27ff44bf4549fb513bd8931da14d21acb81c4374a442eea97'
+            'a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6'
             '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
-            'aae18e369ed76e0a1aaeb7c333349b7dfb89923dc961c9fbf493a356b5da0059'
+            'e523b7d469f6f07c7db84e1b98f19cc1e57ed9f3ccbaa5d6a13e546020a4a09c'
             '0f6aaca54c65eb01ca837e119d89a0bc56a908f06d9d7e4abfab16df921ba078'
             '0d8be9e4ff9faf6b550dc821bf26a1ebffc8186ddcf7830ceffb9574c8454308'
             'be41cfff88d9ee1ed705bd5aee9714c50e91579ab9c465457e930a3abcb9482b'

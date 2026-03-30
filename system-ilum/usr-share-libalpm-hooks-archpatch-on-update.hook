@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Patching config files for system...
+Depends = archpatch
+When = PostTransaction
+Exec = /usr/bin/archpatch apply
