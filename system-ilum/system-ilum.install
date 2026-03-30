@@ -4,7 +4,7 @@ function __do_the_thing() {
     nix-daemon.service \
     docker.service \
     btrfs-scrub@-.timer \
-    btrfs-scrub@-mnt-fastass \
+    btrfs-scrub@mnt-fastass.timer \
     ly@tty2.service
 }
 
