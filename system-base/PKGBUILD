@@ -1,5 +1,5 @@
 pkgname=system-base
-pkgver=2.0.2
+pkgver=2.0.3
 pkgrel=1
 
 pkgdesc='System configuration base'
@@ -39,16 +39,16 @@ depends=(
 )
 
 source=(
-  'etc-vconsole.conf'
-  'etc-locale.gen.patch'
-  'etc-locale.conf'
-  'etc-systemd-network-89-ethernet.network'
+  'vconsole.conf'
+  'locale.gen.patch'
+  'locale.conf'
+  '89-ethernet.network'
   'sudoers.d-allow-sudo-group'
-  'etc-makepkg.d-parallel.conf'
-  'etc-pacman.conf.patch'
-  'etc-xdg-reflector-reflector.conf.patch'
-  'etc-pacreport.conf'
-  'usr-share-libalpm-hooks-archpatch-on-update.hook'
+  'makepkg.d-parallel.conf'
+  'pacman.conf.patch'
+  'reflector.conf.patch'
+  'pacreport.conf'
+  'archpatch-on-update.hook'
 )
 install='system-base.install'
 
@@ -56,11 +56,11 @@ package() {
   # Basic stuff
   mkdir -p "$pkgdir"/etc
   ln -sf ../usr/share/zoneinfo/Europe/Paris "$pkgdir"/etc/localtime
-  install -Dm0644 etc-vconsole.conf "$pkgdir"/etc/vconsole.conf
-  install -Dm0644 etc-locale.conf "$pkgdir"/etc/locale.conf
+  install -Dm0644 vconsole.conf "$pkgdir"/etc/vconsole.conf
+  install -Dm0644 locale.conf "$pkgdir"/etc/locale.conf
   
   # Network
-  install -Dm0644 etc-systemd-network-89-ethernet.network "$pkgdir"/etc/systemd/network/89-ethernet.network
+  install -Dm0644 89-ethernet.network "$pkgdir"/etc/systemd/network/89-ethernet.network
   # stub resolve.conf is done in the .install
 
   # Sudo
@@ -68,14 +68,14 @@ package() {
   chmod 750 "$pkgdir"/etc/sudoers.d/
 
   # Archlinux stuff
-  install -Dm0644 etc-makepkg.d-parallel.conf "$pkgdir"/etc/makepkg.conf.d/99-parallel.conf
-  install -Dm0644 etc-pacreport.conf "$pkgdir"/etc/pacreport.conf
+  install -Dm0644 makepkg.d-parallel.conf "$pkgdir"/etc/makepkg.conf.d/99-parallel.conf
+  install -Dm0644 pacreport.conf "$pkgdir"/etc/pacreport.conf
 
   # Patches setup
-  install -Dm0644 etc-locale.gen.patch "$pkgdir"/usr/share/archpatch/patches/etc-locale.gen.patch
-  install -Dm0644 etc-pacman.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-pacman.conf.patch
-  install -Dm0644 etc-xdg-reflector-reflector.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-xdg-reflector-reflector.conf.patch
-  install -Dm0644 usr-share-libalpm-hooks-archpatch-on-update.hook "$pkgdir"/usr/share/libalpm/hooks/archpatch-on-update.hook
+  install -Dm0644 locale.gen.patch "$pkgdir"/usr/share/archpatch/patches/etc-locale.gen.patch
+  install -Dm0644 pacman.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-pacman.conf.patch
+  install -Dm0644 reflector.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-xdg-reflector-reflector.conf.patch
+  install -Dm0644 archpatch-on-update.hook "$pkgdir"/usr/share/libalpm/hooks/archpatch-on-update.hook
 }
 
 sha256sums=('2c09b43e51de87a82ff5eeb1c599ce25800b8d34810f14044bf73644e9f7b742'
