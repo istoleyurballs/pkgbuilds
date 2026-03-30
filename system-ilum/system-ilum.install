@@ -1,5 +1,3 @@
-post_install() {
-}
 function __do_the_thing() {
   echo "Enabling nix-daemon docker btrfs-scrub ly"
   systemctl enable --now \
