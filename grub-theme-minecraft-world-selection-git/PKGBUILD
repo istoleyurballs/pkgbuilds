@@ -19,6 +19,6 @@ pkgver() {
 }
 
 package() {
-  mkdir -p "${pkgdir}/usr/share/grub/themes/"
-  cp -r "${srcdir}/minegrub-world-sel-theme/minegrub-world-selection" "${pkgdir}/usr/share/grub/themes/"
+  mkdir -p "$pkgdir"/usr/share/grub/themes/
+  cp -r "$srcdir"/minegrub-world-sel-theme/minegrub-world-selection "$pkgdir"/usr/share/grub/themes/
 }

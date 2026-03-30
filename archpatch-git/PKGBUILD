@@ -28,5 +28,5 @@ build() {
 
 package() {
   cd "$srcdir/$_pkgname"
-  install -Dm0755 target/release/archpatch "$pkgdir/usr/bin/archpatch"
+  install -Dm0755 target/release/archpatch "$pkgdir"/usr/bin/archpatch
 }
