@@ -33,6 +33,7 @@ depends=(
   'openssh' 'sshfs'
   'imagemagick' 'ffmpeg'
 )
+conflicts=('system-ilum-skeleton' 'system-ilum-base')
 replaces=('system-ilum-skeleton' 'system-ilum-base')
 
 source=(

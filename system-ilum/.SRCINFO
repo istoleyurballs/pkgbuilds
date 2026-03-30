@@ -52,6 +52,7 @@ pkgbase = system-ilum
 	depends = brightnessctl
 	depends = wev
 	depends = vulkan-caps-viewer-wayland
+	conflicts = system-ilum-full
 	replaces = system-ilum-full
 	source = etc-hostname
 	source = ilum-grub.nu
