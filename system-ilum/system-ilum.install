@@ -5,7 +5,7 @@ function __do_the_thing() {
     docker.service \
     btrfs-scrub@-.timer \
     btrfs-scrub@-mnt-fastass \
-    ly.service
+    ly@tty2.service
 }
 
 post_install() {
