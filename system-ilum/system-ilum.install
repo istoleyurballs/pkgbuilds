@@ -1,0 +1,8 @@
+post_install() {
+  systemctl enable \
+    nix-daemon.service \
+    docker.service \
+    btrfs-scrub@-.timer \
+    btrfs-scrub@-mnt-fastass \
+    ly.service
+}

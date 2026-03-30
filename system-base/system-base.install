@@ -4,8 +4,6 @@ function __do_the_thing() {
     systemd-networkd.service \
     systemd-resolved.service \
     systemd-timesyncd.service \
-    btrfs-scrub@-.timer \
-    btrfs-scrub@-mnt-fastass \
     smartd.service \
     paccache.timer \
     reflector.timer
