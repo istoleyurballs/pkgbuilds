@@ -1,8 +1,19 @@
 post_install() {
-  systemctl enable \
+}
+function __do_the_thing() {
+  echo "Enabling nix-daemon docker btrfs-scrub ly"
+  systemctl enable --now \
     nix-daemon.service \
     docker.service \
     btrfs-scrub@-.timer \
     btrfs-scrub@-mnt-fastass \
     ly.service
+}
+
+post_install() {
+  __do_the_thing
+}
+
+post_upgrade() {
+  __do_the_thing
 }
