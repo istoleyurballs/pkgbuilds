@@ -1,7 +1,6 @@
 function __do_the_thing() {
   echo "Enabling nix-daemon docker btrfs-scrub ly"
   systemctl enable --now \
-    nix-daemon.service \
     docker.service \
     btrfs-scrub@-.timer \
     btrfs-scrub@mnt-fastass.timer \
