@@ -1,5 +1,5 @@
 pkgname=system-base
-pkgver=2.0.4
+pkgver=2.1.0
 pkgrel=1
 
 pkgdesc='System configuration base'
@@ -28,14 +28,14 @@ depends=(
 
   # Shell tools
   'fish' 'nushell' 'starship' 'zellij'
-  'bat' 'htop' 'gotop' 'nvtop' 'fastfetch'
+  'bat' 'htop' 'nvtop' 'fastfetch'
   'tree' 'jq' 'jc' 'unzip' 'moreutils' 'tokei'
   'git' 'lazygit'
   'dmidecode' 'systemd-resolvconf' 'wireguard-tools'
   'man-db' 'man-pages'
   'neovim' 'fzf' 'ripgrep'
   'openssh' 'sshfs'
-  'imagemagick' 'ffmpeg' 'aria2'
+  'aria2'
 )
 
 source=(
