@@ -32,7 +32,7 @@ Install the `system-install-scripts` package manually and just run it:
 # Generate a pacman database of package necessary packages that aren't in the official repo.
 system-install prepare path/to/this/pkgbuilds/repo --build-user $USER
 
-# The actuall installation.
+# The actual installation.
 system-install install-ilum \
     --bootdev /dev/disk/by-partlabel/ilum-boot \
     --rootdev /dev/disk/by-partlabel/ilum-root \
@@ -40,6 +40,15 @@ system-install install-ilum \
     --create-user $USER \
     --host-user $USER
 ```
+
+Now that the filesystem is ready, copy over personal data:
+- [ ] SSH keys
+- [ ] GPG keys
+- [ ] Password/Secret files
+- [ ] Image folder
+- [ ] Commit & push every project
+- [ ] Exports of various apps to import later
+    - [ ] PrismLauncher
 
 You can now do last seconds stuff like generating SSH key and whatnot with:
 ```sh
@@ -52,3 +61,10 @@ And its done !
 umount -Rl /mnt
 reboot
 ```
+
+## TODO
+
+- Config for coruscant
+- Config for kuat
+- Setup btrbk hooks
+- Script to copy personal data
