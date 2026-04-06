@@ -159,6 +159,9 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
   log $"Installing the rest of the packages for (ansi wb)system-ilum(ansi reset)"
   ^arch-chroot -S -u $user $mnt paru -Syu system-ilum
 
+  log "Installing flatpak packages"
+  ^arch-chroot $mnt ilum-flatpak install
+
   log $"Installing the rest of dotfiles"
   ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && make"
 
