@@ -3,5 +3,5 @@ index 77dda56..94b2bb7 100644
 --- a/etc/locale.gen
 +++ b/etc/locale.gen
 @@ -172 +172 @@
--#en_US.UTF-8 UTF-8
+-#en_US.UTF-8 UTF-8  
 +en_US.UTF-8 UTF-8

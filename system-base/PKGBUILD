@@ -1,5 +1,5 @@
 pkgname=system-base
-pkgver=2.1.0
+pkgver=2.1.1
 pkgrel=1
 
 pkgdesc='System configuration base'
@@ -79,7 +79,7 @@ package() {
 }
 
 sha256sums=('2c09b43e51de87a82ff5eeb1c599ce25800b8d34810f14044bf73644e9f7b742'
-            'e295508f30f24ec27ff44bf4549fb513bd8931da14d21acb81c4374a442eea97'
+            'e1eeacf0c5c25e00a0e669f2f1340692a9efb6941ea1e4a63e9f08d22ed3da23'
             '033252d5100cbb0028d7c15e075f63e4eb5ff7f1a923cd5cb547bcfd6b024f5b'
             '23dd289c12332bb8821363bcdd2d593b3171f1d5e2c5d9b9f888dbe9e981e3d4'
             '81576086c069a2c098b510553a20c6b44b42c954d7d359991ec90db475142486'
