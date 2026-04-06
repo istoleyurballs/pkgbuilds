@@ -1,0 +1,25 @@
+pkgname=system-install-scripts
+pkgver=1.0.0
+pkgrel=1
+
+pkgdesc='System configuration install scripts'
+url='https://github.com/istoleyurballs/pkgbuilds'
+arch=('any')
+license=('GPL-3.0-or-later')
+
+depends=('arch-install-scripts' 'nushell' 'paru')
+
+source=(
+  'system-install.nu'
+  'pacstrap.conf'
+)
+
+package() {
+  install -Dm0755 system-install.nu "$pkgdir"/usr/bin/system-install
+  install -Dm0644 pacstrap.conf "$pkgdir"/usr/share/"$pkgname"/pacstrap.conf
+
+  mkdir -p "$pkgdir"/var/cache/"$pkgname"
+}
+
+sha256sums=('5cab1f74e4a710e2a05dad499067416f5de717b940a9a2d6b4ea82e605fd5e90'
+            '07e99fbbdee2d71f4548522d91832fa000bc6a313a92935eb2fea8669ea1ab31')
