@@ -13,7 +13,7 @@ depends=(
   'efibootmgr'
   # Maintenance
   'reflector' 'pacman-contrib' 'pacutils' 'smartmontools' 'powertop'
-  'archpatch-git'
+  'archpatch'
   # AUR
   'base-devel' 'devtools' 'paru'
   # Dotfiles
