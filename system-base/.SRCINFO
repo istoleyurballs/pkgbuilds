@@ -1,6 +1,6 @@
 pkgbase = system-base
 	pkgdesc = System configuration base
-	pkgver = 2.0.3
+	pkgver = 2.0.4
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-base.install
@@ -17,7 +17,7 @@ pkgbase = system-base
 	depends = pacutils
 	depends = smartmontools
 	depends = powertop
-	depends = archpatch-git
+	depends = archpatch
 	depends = base-devel
 	depends = devtools
 	depends = paru
