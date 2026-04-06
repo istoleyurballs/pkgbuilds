@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.0.6
+pkgver=2.1.1
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -41,12 +41,12 @@ depends=(
   'ttf-jetbrains-mono-nerd' 'ttf-liberation'
   # Bit random
   'nwg-look' 'papirus-icon-theme' 'brightnessctl' 'wev'
-  'vulkan-caps-viewer-wayland'
+  'vulkan-caps-viewer-wayland' 'imagemagick' 'ffmpeg'
 )
 
 source=(
   'hostname'
-  'ilum-grub.nu'
+  'ilum-boot.nu'
   'ly-config.ini.patch'
   'etc-default-grub.patch'
   'mkinitcpio.conf.patch'
@@ -75,7 +75,7 @@ package() {
   install -Dm0644 hostname "$pkgdir"/etc/hostname
 
   # Grub
-  install -Dm0755 ilum-grub.nu "$pkgdir"/usr/bin/ilum-grub
+  install -Dm0755 ilum-boot.nu "$pkgdir"/usr/bin/ilum-boot
 
   # Patches
   install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/archpatch/patches/etc-default-grub.patch
@@ -93,7 +93,7 @@ package() {
 }
 
 sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
-            'c0a455bd853a098b3677de24798380f325054e27739a91eb4646392dc0f2cb43'
+            '37a73fcbd527e7dc341719704d7ce9ddc4d43a1099b1d5e0ba664eed6d7e8390'
             'a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6'
             '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
             'e523b7d469f6f07c7db84e1b98f19cc1e57ed9f3ccbaa5d6a13e546020a4a09c'

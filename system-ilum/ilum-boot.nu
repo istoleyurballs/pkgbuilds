@@ -32,7 +32,7 @@ def "main install" [
 }
 
 def main [] {
-  print "Usage: install"
+  help main
 }
 
 # vim: set tabstop=2 shiftwidth=2 expandtab :
