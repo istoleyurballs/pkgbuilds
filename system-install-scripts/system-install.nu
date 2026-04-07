@@ -13,6 +13,10 @@ def assert-superuser [] {
   }
 }
 
+def mkswappath [mnt: path] {
+  $"($mnt)/mnt/rootfs/@swap/swapfile" | path expand
+}
+
 # Given a boot and root partition, reformat them with appropriate filesystems and labels.
 def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string, --force] {
   assert-superuser
@@ -68,7 +72,7 @@ def "main internal mkswap" [mnt: path] {
 
   # Ram size + 1G
   let swapsize = (sys mem | get total | into int) + 1000000000
-  let swapfile = $"($mnt)/mnt/rootfs/@swap/swapfile" | path expand
+  let swapfile = mkswappath $mnt
 
   log $"Creating (ansi wb)($swapsize | into filesize)(ansi reset) of swap at (ansi wb)($swapfile)(ansi reset)"
   ^btrfs filesystem mkswapfile --size $swapsize $swapfile
@@ -130,7 +134,7 @@ def "main internal pacstrap" [mnt: path, package: string] {
   assert-superuser
 
   log $"Creating file structure with (ansi wb)pacstrap(ansi reset)"
-  ^pacstrap -C /usr/share/system-install-scripts/pacstrap.conf -c -K -i $mnt $package
+  ^pacstrap -C /usr/share/system-install-scripts/pacstrap.conf -K -i $mnt $package
 }
 
 def "main internal mkuser" [mnt: path, user: string, host_user: string] {
@@ -160,7 +164,7 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
   ^arch-chroot -S -u $user $mnt paru -Syu system-ilum
 
   log "Installing flatpak packages"
-  ^arch-chroot $mnt ilum-flatpak install
+  ^arch-chroot -S $mnt ilum-flatpak install
 
   log $"Installing the rest of dotfiles"
   ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && make"
@@ -178,6 +182,9 @@ def "main internal finalize" [mnt: path] {
   ^arch-chroot $mnt locale-gen
   log "Changing root password"
   ^arch-chroot $mnt passwd
+
+  log "Disabling swap"
+  ^swapoff (mkswappath $mnt)
 }
 
 # === Main commands
