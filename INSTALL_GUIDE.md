@@ -47,10 +47,14 @@ Now that the filesystem is ready, copy over personal data:
 - [ ] Password/Secret files
 - [ ] Image folder
 - [ ] Commit & push every project
-- [ ] Exports of various apps to import later
+- [ ] Exports settings/data of various apps to import later
     - [ ] PrismLauncher
 
-You can now do last seconds stuff like generating SSH key and whatnot with:
+```sh
+system-install copy-user-data --mnt /mnt --host-user $USER --target-user $USER
+```
+
+You can now do last seconds stuff with:
 ```sh
 arch-chroot /mnt
 ```
@@ -58,7 +62,7 @@ arch-chroot /mnt
 And its done !
 
 ```sh
-umount -Rl /mnt
+umount -R /mnt
 reboot
 ```
 

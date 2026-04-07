@@ -224,6 +224,79 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
   main internal finalize $mnt
 }
 
+def "main bundle-user-data" [...additional_paths: string, --mnt: path = "/mnt" --host-user: string, --target-user: string] {
+  if not ($mnt | path exists) {
+    log $"Mountpoint doesn't exists: (ansi wb)($mnt)(ansi reset)"
+    exit 1
+  }
+  if ($host_user | is-empty) {
+    log $"Host user is empty"
+    exit 1
+  }
+  if ($target_user | is-empty) {
+    log $"Target user is empty"
+    exit 1
+  }
+
+  let host_home = $"/home/($host_user)"
+  let target_home = $"($mnt)/home/($target_user)"
+
+  if not ($host_home | path exists) {
+    log $"Host user doesn't have a home ?"
+    exit 1
+  }
+  if not ($target_home | path exists) {
+    log $"Target user doesn't have a home at mountpoint"
+    exit 1
+  }
+
+  let tmp = mktemp --directory "system-install.export.XXXX"
+  let export = mktemp "system-install.export.XXXX.tar"
+
+  dirs add $host_home
+
+  let ssh_keys = glob $"./.ssh/*.{key,key.pub}"
+  if ($ssh_keys | is-not-empty) {
+    log "Copying SSH keys"
+    ^tar --append -f $export ...($ssh_keys | path relative-to ("." | path expand))
+  }
+
+  dirs add $tmp
+  ^sudo -u $host_user gpg --armor --export o> pub.gpg.asc
+  if (du pub.gpg.asc | get 0.apparent | into int) > 0 {
+    log "Exporting GPG public keys"
+    ^tar --append -f $export pub.gpg.asc
+  }
+  ^sudo -u $host_user gpg --armor --export-secret-keys o> sec.gpg.asc
+  if (du pub.gpg.asc | get 0.apparent | into int) > 0 {
+    log "Exporting GPG secret keys"
+    ^tar --append -f $export sec.gpg.asc
+  }
+  dirs drop
+
+  log "Copying pictures folder"
+  ^tar --append -f $export Pictures
+
+  log "Copying document folder"
+  ^tar --append -f $export Documents
+
+  log "Copying secrets folder"
+  ^tar --append -f $export Secrets
+
+  if ($additional_paths | is-not-empty) {
+    log "Copying additional files"
+    ^tar --append -f $export ...($additional_paths | path relative-to ("." | path expand))
+  }
+
+  log $"Moving to (ansi wb)($target_home)(ansi reset)"
+  mv -p $export $"($target_home)/export.tar"
+  ^arch-chroot -S $mnt chown $"($target_user):($target_user)" $"/home/($target_user)/export.tar"
+
+  dirs drop
+
+  rm -r $tmp
+}
+
 def main [] {
   help main
 }
