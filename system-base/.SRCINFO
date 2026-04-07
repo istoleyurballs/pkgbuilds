@@ -49,6 +49,7 @@ pkgbase = system-base
 	depends = man-db
 	depends = man-pages
 	depends = neovim
+	depends = tree-sitter-cli
 	depends = fzf
 	depends = ripgrep
 	depends = openssh

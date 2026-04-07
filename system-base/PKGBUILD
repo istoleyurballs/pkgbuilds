@@ -33,7 +33,7 @@ depends=(
   'git' 'lazygit'
   'dmidecode' 'systemd-resolvconf' 'wireguard-tools'
   'man-db' 'man-pages'
-  'neovim' 'fzf' 'ripgrep'
+  'neovim' 'tree-sitter-cli' 'fzf' 'ripgrep'
   'openssh' 'sshfs'
   'aria2'
 )
