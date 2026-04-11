@@ -156,7 +156,7 @@ def "main internal mkuser" [mnt: path, user: string, host_user: string] {
   log "Setting up dotfiles"
   sudo -u $host_user git clone --recursive git@github.com:istoleyurballs/dotfiles.git $"($mnt)/home/($user)/dotfiles"
   ^arch-chroot $mnt chown -R $"($user):($user)" $"/home/($user)/dotfiles"
-  ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && stow paru"
+  ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && make paru"
 }
 
 def "main internal finalize-ilum" [mnt: path, user: string] {
