@@ -13,6 +13,13 @@ def assert-superuser [] {
   }
 }
 
+def assert-mnt-exists [$mnt: path] {
+  if not ($mnt | path exists) {
+    log $"Mountpoint doesn't exists: (ansi wb)($mnt)(ansi reset)"
+    exit 1
+  }
+}
+
 def mkswappath [mnt: path] {
   $"($mnt)/mnt/rootfs/@swap/swapfile" | path expand
 }
@@ -182,9 +189,6 @@ def "main internal finalize" [mnt: path] {
   ^arch-chroot $mnt locale-gen
   log "Changing root password"
   ^arch-chroot $mnt passwd
-
-  log "Disabling swap"
-  ^swapoff (mkswappath $mnt)
 }
 
 # === Main commands
@@ -202,10 +206,7 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
     log $"Root device doesn't exists: (ansi wb)($rootdev)(ansi reset)"
     exit 1
   }
-  if not ($mnt | path exists) {
-    log $"Mountpoint doesn't exists: (ansi wb)($mnt)(ansi reset)"
-    exit 1
-  }
+  assert-mnt-exists $mnt
   if ($create_user | is-empty) {
     log $"Please specify a username with `--create-user`"
     exit 1
@@ -226,10 +227,7 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
 
 # A very opiniated way to build an archive of important files to keep and transfer to the new system.
 def "main bundle-user-data" [...additional_paths: string, --mnt: path = "/mnt" --host-user: string, --target-user: string] {
-  if not ($mnt | path exists) {
-    log $"Mountpoint doesn't exists: (ansi wb)($mnt)(ansi reset)"
-    exit 1
-  }
+  assert-mnt-exists $mnt
   if ($host_user | is-empty) {
     log $"Host user is empty"
     exit 1
@@ -305,6 +303,17 @@ def "main bundle-user-data" [...additional_paths: string, --mnt: path = "/mnt" -
     | each {|d| log $" - Project (ansi wb)($d.name | path relative-to $host_home)(ansi reset) has local only changes !" }
 
   null
+}
+
+def "main finish" [--mnt = "/mnt"] {
+  assert-superuser
+  assert-mnt-exists $mnt
+
+  log "Disabling swap"
+  ^swapoff (mkswappath $mnt)
+
+  log "Unounting everything"
+  ^umount -R -v $mnt
 }
 
 def main [] {

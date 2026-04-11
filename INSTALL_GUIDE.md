@@ -49,6 +49,8 @@ Now that the filesystem is ready, copy over personal data:
 - [ ] Commit & push every project
 - [ ] Exports settings/data of various apps to import later
     - [ ] PrismLauncher
+    - [ ] Firefox
+    - [ ] ...
 
 ```sh
 system-install copy-user-data --mnt /mnt --host-user $USER --target-user $USER
@@ -62,13 +64,13 @@ arch-chroot /mnt
 And its done !
 
 ```sh
-umount -R /mnt
+system-install finish --mnt /mnt
 reboot
 ```
 
 ## TODO
 
-- Config for coruscant
-- Config for kuat
-- Setup btrbk hooks
-- Script to copy personal data
+- [ ] Config for coruscant
+- [ ] Config for kuat
+- [ ] Setup btrbk hooks
+- [x] Script to copy personal data
