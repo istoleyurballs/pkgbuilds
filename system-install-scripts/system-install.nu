@@ -224,6 +224,7 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
   main internal finalize $mnt
 }
 
+# A very opiniated way to build an archive of important files to keep and transfer to the new system.
 def "main bundle-user-data" [...additional_paths: string, --mnt: path = "/mnt" --host-user: string, --target-user: string] {
   if not ($mnt | path exists) {
     log $"Mountpoint doesn't exists: (ansi wb)($mnt)(ansi reset)"
@@ -295,6 +296,15 @@ def "main bundle-user-data" [...additional_paths: string, --mnt: path = "/mnt" -
   dirs drop
 
   rm -r $tmp
+
+  log $"Checking for uncommited/pushed changes in (ansi wb)~/Dev(ansi reset)"
+  ls $"($host_home)/Dev"
+    | insert git_committed {|d| dirs add $d.name; (^git diff-index --quiet origin/HEAD | complete | get exit_code) == 0}
+    | insert git_pushed {|d| dirs add $d.name; (^git remote get-url origin | complete | get exit_code) == 0}
+    | where not $it.git_committed or not $it.git_pushed
+    | each {|d| log $" - Project (ansi wb)($d.name | path relative-to $host_home)(ansi reset) has local only changes !" }
+
+  null
 }
 
 def main [] {
