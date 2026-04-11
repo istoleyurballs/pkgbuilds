@@ -26,7 +26,15 @@ Use `fdisk` to achive this layout.
 
 ## Installation
 
-Install the `system-install-scripts` package manually and just run it:
+The package `system-install-scripts` provided a suite of scripts to automate the majority of the installation, in order:
+- `system-install prepare` (as root): A one time thing, mainly to generate a custom pacman database for pacstrap later.
+- `system-install instal-XXX` (as root): Performs the main installation steps for config `XXX` which may include machine specific steps in between.
+- `system-install bundle-user-data` (as root): Creates a (very opiniated) archive of important files belonging to your user and places them in the chroot.
+- `system-install finish` (as root): Wraps up the installation by unmounting the install.
+
+As the commands need to be ran as root you need to specify your username to most of them so they can drop down to a working less privileged user.
+
+In action:
 
 ```sh
 # Generate a pacman database of package necessary packages that aren't in the official repo.
@@ -53,12 +61,13 @@ Now that the filesystem is ready, copy over personal data:
     - [ ] ...
 
 ```sh
-system-install copy-user-data --mnt /mnt --host-user $USER --target-user $USER
+system-install bundle-user-data --mnt /mnt --host-user $USER --target-user $USER
 ```
 
 You can now do last seconds stuff with:
 ```sh
-arch-chroot /mnt
+# The -S uses a systemd unit and allows more stuff to be done.
+arch-chroot -S /mnt
 ```
 
 And its done !
