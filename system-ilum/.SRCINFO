@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.2.0
+	pkgver = 2.2.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
