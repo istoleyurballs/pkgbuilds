@@ -184,7 +184,7 @@ def "main internal finalize" [mnt: path] {
   assert-superuser
 
   log "Generating fstab"
-  ^genfstab -L $mnt o> $"($mnt)/etc/fstab"
+  ^genfstab -U $mnt o> $"($mnt)/etc/fstab"
   log "Generating locales"
   ^arch-chroot $mnt locale-gen
   log "Changing root password"
