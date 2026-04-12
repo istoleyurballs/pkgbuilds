@@ -1,0 +1,15 @@
+function __do_the_thing() {
+  echo "Enabling btrfs-scrub k3s"
+  systemctl enable --now \
+    btrfs-scrub@-.timer \
+    btrfs-scrub@mnt-lucastrunk.timer \
+    k3s.service
+}
+
+post_install() {
+  __do_the_thing
+}
+
+post_upgrade() {
+  __do_the_thing
+}
