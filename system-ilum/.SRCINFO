@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.3.0
+	pkgver = 2.3.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
@@ -69,7 +69,7 @@ pkgbase = system-ilum
 	source = hyprland-tv-hdr-uwsm.desktop
 	source = ilum-flatpak.nu
 	sha256sums = 5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a
-	sha256sums = 1a6eaecb455d23f73a06cbe201ac44bb987af2a3bcd71a8511fb70cafe7ec890
+	sha256sums = 1839afa1a5c289a2e1ee3dcb6aa9ea8ed80b48f8caa5e5d42899956e3eb95874
 	sha256sums = ac0354c56a99295133737868e4fd9f52e16ca047adb3ba8d847a72875d9b1bee
 	sha256sums = 38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db
 	sha256sums = a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6

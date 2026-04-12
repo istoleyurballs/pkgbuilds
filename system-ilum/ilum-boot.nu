@@ -1,7 +1,7 @@
 #!/usr/bin/env nu
 
 def log [message: string] {
-  print $"(ansi wb)[(ansi red)ilum-boot(ansi wb)](ansi reset) ($message)"
+  print $"(ansi wb)[(ansi red_bold)ilum-boot(ansi wb)](ansi reset) ($message)(ansi reset)"
 }
 
 def "main install" [
