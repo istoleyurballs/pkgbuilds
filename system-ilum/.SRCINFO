@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.2.1
+	pkgver = 2.2.2
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
@@ -49,7 +49,8 @@ pkgbase = system-ilum
 	depends = steam
 	depends = lib32-nvidia-utils
 	depends = lib32-systemd
-	depends = ttf-noto-nerd
+	depends = noto-fonts
+	depends = noto-fonts-emoji
 	depends = ttf-jetbrains-mono-nerd
 	depends = nwg-look
 	depends = papirus-icon-theme
