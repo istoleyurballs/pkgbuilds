@@ -1,34 +1,40 @@
 #!/usr/bin/env nu
 
+def log [message: string] {
+  print $"(ansi wb)[(ansi red)ilum-boot(ansi wb)](ansi reset) ($message)"
+}
+
 def "main install" [
-  --efi-directory: string = "/boot",
-  --theme: string = "minegrub-world-selection",
-  --root: string = "/"
+  --esp: path = "/boot",
+  --disk: path = "/dev/disk/by-partlabel/ilum-boot",
+  --partition: int = 1,
+  --root: path = "/"
 ] {
   if not (is-admin) {
-    print "ERROR: This commands need superuser privileges"
+    print "ERROR: This commands needs superuser privileges"
     exit 1
   }
 
-  let theme_path = $"($root)/usr/share/grub/themes/($theme)"
+  log $"Generating (ansi wb)/etc/cmdline.d/root.conf(ansi reset)"
+  let root_uuid = ^findmnt -J --output=uuid $root | from json | get filesystems.0.uuid
+  $"root=UUID=($root_uuid)" > /etc/cmdline.d/root.conf
 
-  if not ($theme_path | path exists) {
-    print "ERROR: Theme does not exists"
-    exit 1
-  }
+  log "Building the EFI executable"
+  mkdir $"($esp)/EFI/Linux"
+  ^mkinitcpio -p linux
 
-  print "INFO: Running grub-install..."
-  ^grub-install --target=x86_64-efi --efi-directory=($efi_directory) --bootloader-id=GRUB --removable
+  log $"Adding a boot entry for (ansi wb)arch-linux.efi(ansi reset)"
+  (^efibootmgr --create
+    --disk $disk --part $partition
+    --label 'Arch Linux' --loader '\EFI\Linux\arch-linux.efi' --unicode)
+  
+  log $"Adding a boot entry for (ansi wb)arch-linux-fallback.efi(ansi reset)"
+  (^efibootmgr --create
+    --disk $disk --part $partition
+    --label 'Arch Linux (fallback)' --loader '\EFI\Linux\arch-linux-fallback.efi' --unicode)
 
-  print "INFO: Installing theme..."
-  let theme_target_path = $"($efi_directory)/grub/themes/($theme)"
-  if ($theme_target_path | path exists) {
-    rm -rfp $theme_target_path
-  }
-  cp --recursive --progress $theme_path $theme_target_path
-
-  print "INFO: Generating config..."
-  ^grub-mkconfig -o $"($efi_directory)/grub/grub.cfg"
+  log "Cleaning duplicated boot entries"
+  ^efibootmgr --remove-dups
 }
 
 def main [] {

@@ -83,3 +83,4 @@ reboot
 - [ ] Config for kuat
 - [ ] Setup btrbk hooks
 - [x] Script to copy personal data
+- [x] Generate `/etc/cmdline.d/root.conf` with the correct partition UUID

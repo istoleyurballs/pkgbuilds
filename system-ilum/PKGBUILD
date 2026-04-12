@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.2.2
+pkgver=2.3.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -8,8 +8,8 @@ arch=('any')
 license=('GPL-3.0-or-later')
 
 depends=(
-  # Needed to boot
-  'system-base' 'grub' 'os-prober' 'grub-theme-minegrub-world-selection-git'
+  # Needed to boot (nothing more really)
+  'system-base'
 
   # NVIDIA Drivers
   'nvidia-open' 'nvidia-utils' 'libva-nvidia-driver'
@@ -47,6 +47,8 @@ depends=(
 source=(
   'hostname'
   'ilum-boot.nu'
+  'cmdline.d-ilum.conf'
+  'mkinitcpio.d-linux.preset'
   'ly-config.ini.patch'
   'etc-default-grub.patch'
   'mkinitcpio.conf.patch'
@@ -74,8 +76,10 @@ package() {
   # Basic stuff
   install -Dm0644 hostname "$pkgdir"/etc/hostname
 
-  # Grub
+  # Boot
   install -Dm0755 ilum-boot.nu "$pkgdir"/usr/bin/ilum-boot
+  install -Dm0644 cmdline.d-ilum.conf "$pkgdir"/etc/cmdline.d/ilum.conf
+  install -Dm0644 mkinitcpio.d-linux.preset "$pkgdir"/etc/mkinitcpio.d/linux.preset
 
   # Patches
   install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/archpatch/patches/etc-default-grub.patch
@@ -93,7 +97,9 @@ package() {
 }
 
 sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
-            '34842fd798fe7500408b766132eb907c477e72f03b98e2a64e361df6666090c9'
+            '1a6eaecb455d23f73a06cbe201ac44bb987af2a3bcd71a8511fb70cafe7ec890'
+            'ac0354c56a99295133737868e4fd9f52e16ca047adb3ba8d847a72875d9b1bee'
+            '38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db'
             'a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6'
             '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
             'e523b7d469f6f07c7db84e1b98f19cc1e57ed9f3ccbaa5d6a13e546020a4a09c'
