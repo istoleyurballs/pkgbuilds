@@ -22,16 +22,16 @@ def "main install" [
   log "Building the EFI executable"
   mkdir $"($esp)/EFI/Linux"
   ^mkinitcpio -p linux
-
-  log $"Adding a boot entry for (ansi wb)arch-linux.efi(ansi reset)"
-  (^efibootmgr --create
-    --disk $disk --part $partition
-    --label 'Arch Linux' --loader '\EFI\Linux\arch-linux.efi' --unicode)
   
   log $"Adding a boot entry for (ansi wb)arch-linux-fallback.efi(ansi reset)"
   (^efibootmgr --create
     --disk $disk --part $partition
     --label 'Arch Linux (fallback)' --loader '\EFI\Linux\arch-linux-fallback.efi' --unicode)
+
+  log $"Adding a boot entry for (ansi wb)arch-linux.efi(ansi reset)"
+  (^efibootmgr --create
+    --disk $disk --part $partition
+    --label 'Arch Linux' --loader '\EFI\Linux\arch-linux.efi' --unicode)
 
   log "Cleaning duplicated boot entries"
   ^efibootmgr --remove-dups
