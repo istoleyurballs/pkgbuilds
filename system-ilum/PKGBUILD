@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.3.2
+pkgver=2.3.3
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -50,7 +50,6 @@ source=(
   'cmdline.d-ilum.conf'
   'mkinitcpio.d-linux.preset'
   'ly-config.ini.patch'
-  'etc-default-grub.patch'
   'mkinitcpio.conf.patch'
   'hyprland-gaming.desktop'
   'hyprland-gaming-uwsm.desktop'
@@ -82,7 +81,6 @@ package() {
   install -Dm0644 mkinitcpio.d-linux.preset "$pkgdir"/etc/mkinitcpio.d/linux.preset
 
   # Patches
-  install -Dm0644 etc-default-grub.patch "$pkgdir"/usr/share/archpatch/patches/etc-default-grub.patch
   install -Dm0644 mkinitcpio.conf.patch "$pkgdir"/usr/share/archpatch/patches/etc-mkinitcpio.conf.patch
   install -Dm0644 ly-config.ini.patch "$pkgdir"/usr/share/archpatch/patches/etc-ly-config.ini.patch
 
@@ -101,7 +99,6 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             'ac0354c56a99295133737868e4fd9f52e16ca047adb3ba8d847a72875d9b1bee'
             '38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db'
             'a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6'
-            '7974e2094b56af86fbf9338a963a8e23bee694ef42937a3661ea9bf82abd81cb'
             'e523b7d469f6f07c7db84e1b98f19cc1e57ed9f3ccbaa5d6a13e546020a4a09c'
             '0f6aaca54c65eb01ca837e119d89a0bc56a908f06d9d7e4abfab16df921ba078'
             '0d8be9e4ff9faf6b550dc821bf26a1ebffc8186ddcf7830ceffb9574c8454308'
