@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.1.2
+pkgver=2.2.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -38,7 +38,7 @@ depends=(
   # Steam
   'steam' 'lib32-nvidia-utils' 'lib32-systemd'
   # Fonts
-  'ttf-jetbrains-mono-nerd' 'ttf-liberation'
+  'ttf-noto-nerd' 'ttf-jetbrains-mono-nerd'
   # Bit random
   'nwg-look' 'papirus-icon-theme' 'brightnessctl' 'wev'
   'vulkan-caps-viewer-wayland' 'imagemagick' 'ffmpeg'
