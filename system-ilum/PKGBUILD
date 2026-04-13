@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.3.3
+pkgver=2.4.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -34,7 +34,7 @@ depends=(
   # Sound
   'pipewire' 'wireplumber' 'pipewire-pulse' 'pavucontrol'
   # External apps stuff
-  'flatpak' 'docker' 'docker-buildx' 'docker-compose' 'dive' 'k9s' 'kubectl'
+  'flatpak' 'podman' 'podman-compose' 'dive' 'k9s' 'kubectl'
   # Steam
   'steam' 'lib32-nvidia-utils' 'lib32-systemd'
   # Fonts
