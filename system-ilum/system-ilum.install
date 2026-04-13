@@ -1,7 +1,6 @@
 function __do_the_thing() {
-  echo "Enabling docker btrfs-scrub ly"
+  echo "Enabling btrfs-scrub ly"
   systemctl enable --now \
-    docker.service \
     btrfs-scrub@-.timer \
     btrfs-scrub@mnt-fastass.timer \
     ly@tty2.service
