@@ -1,5 +1,5 @@
 pkgname=system-coruscant
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 
 pkgdesc='System configuration for coruscant'
@@ -15,7 +15,7 @@ depends=(
   'vulkan-intel' 'intel-media-driver'
 
   # Container stuff
-  'docker' 'docker-buildx' 'docker-compse'
+  'podman' 'podman-compse'
   'k3s' 'kubectl' 'k9s'
 
   # Media
@@ -26,6 +26,9 @@ source=(
   'hostname'
   'coruscant-boot.nu'
   'cmdline.d-coruscant.conf'
+  'sshd_config.patch'
+  'authorized_keys-root'
+  'authorized_keys-lucas'
 )
 install='system-coruscant.install'
 
@@ -48,8 +51,16 @@ package() {
   isntall -Dm0644 cmdline.d-coruscant.conf "$pkgdir"/etc/cmdline.d/coruscant.conf
 
   # Patches
+  install -Dm0644 sshd_config.patch "$pkgdir"/usr/share/archpatch/patches/etc-ssh-sshd_config.patch
+
+  # SSH authorized keys keys
+  install -Dm0644 authorized_keys-root "$pkgdir"/etc/ssh/authorized_keys.d/root
+  install -Dm0644 authorized_keys-lucas "$pkgdir"/etc/ssh/authorized_keys.d/lucas
 }
 
 sha256sums=('69c16e06ed9bd5dc608d50c03fc4911c57e0d997f19cb758fce7f3095dd21edf'
             '8451e962898dbc4385aa6fa1158e3e353041250c5af7b0acf29cb5f5dc504376'
-            'f59451827d31d56ad8bf5764f22c6e900e81683eb835c561edeb3641da83ea20')
+            'f59451827d31d56ad8bf5764f22c6e900e81683eb835c561edeb3641da83ea20'
+            'c7626b080484e2d4badbd30cf671d5604a8e2e6caa9ff86c34681b95476df29d'
+            '0dc94b71f47b58efb2b1763b176599657f65272d9e0f5449b02e4a3a58e9ce2e'
+            'f79ff706b2e3d873e29a78b5ea0011ef99025ae260e9fad8c0c663dd80dda0ee')

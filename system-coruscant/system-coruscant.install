@@ -1,9 +1,13 @@
 function __do_the_thing() {
-  echo "Enabling btrfs-scrub k3s"
+  echo "Enabling btrfs-scrub k3s sshd"
   systemctl enable --now \
     btrfs-scrub@-.timer \
     btrfs-scrub@mnt-lucastrunk.timer \
-    k3s.service
+    k3s.service \
+    sshd.service
+
+  echo "Setting root password"
+  usermod -p '$6$rounds=1000000$7iaxvgAskJvdGQ5V$2icv5tJgTUjnJgQxL0pabzCX7hXUOdeCvLShWeoQ9zkQN1FIlQMYqUIa6a.62HCKYhQWvy5spt8MX/aj6EDwx/' root
 }
 
 post_install() {

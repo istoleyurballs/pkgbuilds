@@ -1,0 +1,6 @@
+cluster-init: false # Keep using sqlite instead of HA etcd
+flannel-backend: wireguard-native
+disable-cloud-controller: true
+disable:
+  - local-storage
+  - traefik
