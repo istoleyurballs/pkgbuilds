@@ -25,7 +25,7 @@ def mkswappath [mnt: path] {
 }
 
 # Given a boot and root partition, reformat them with appropriate filesystems and labels.
-def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string, --force] {
+def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string, --force, --additional-subvolumes: list<path>] {
   assert-superuser
 
   log $"Formatting (ansi wb)($bootdev)(ansi reset) as FAT32"
@@ -38,13 +38,13 @@ def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string,
     ^mkfs.btrfs --data single --metadata dup --label ilum-rootfs $rootdev
   }
 
-  log $"Creating subvolumes on (ansi wb)($rootdev)"
+  log $"Creating subvolumes on (ansi wb)($rootdev)(ansi reset)"
   # Temp mount to create subvolumes
   ^mount --mkdir -t btrfs $rootdev $mnt
   dirs add $mnt
 
   let user_subvol = $"@home-($user | str kebab-case)"
-  ^btrfs subvolume create @ $user_subvol @var-log @var-flatpak @var-docker @swap
+  ^btrfs subvolume create @ $user_subvol @var-log @swap ...$additional_subvolumes
   ^btrfs subvolume sync .
   ^btrfs property set @ compression zstd
   ^btrfs property set $user_subvol compression zstd
@@ -52,8 +52,8 @@ def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string,
   ^umount $mnt
 }
 
-# Mount the (assumed) correctly formatted boot and root partitions and mount them to a temporary mountpoint.
-def "main internal mount" [bootdev: path, rootdev: path, mnt: path, user: string] {
+# Mount the (assume) correctly formatted boot and root partitions and mount them to a temporary mountpoint.
+def "main internal mount" [bootdev: path, rootdev: path, mnt: path, user: string, --additional-mounts: list<record<vol: path, mnt: path>>] {
   assert-superuser
 
   def mount-rootdev [subvol: string, target: string] {
@@ -65,8 +65,9 @@ def "main internal mount" [bootdev: path, rootdev: path, mnt: path, user: string
   mount-rootdev @ ''
   mount-rootdev $"@home-($user | str kebab-case)" $"/home/($user)"
   mount-rootdev @var-log /var/log
-  mount-rootdev @var-flatpak /var/lib/flatpak
-  mount-rootdev @var-docker /var/lib/docker
+  for mount in $additional_mounts {
+    mount-rootdev $mount.vol $mount.mnt
+  }
   mount-rootdev / /mnt/rootfs
 
   log $"Mounting (ansi wb)($bootdev)(ansi reset) on (ansi wb)($mnt)/boot(ansi reset)"
@@ -144,18 +145,23 @@ def "main internal pacstrap" [mnt: path, package: string] {
   ^pacstrap -C /usr/share/system-install-scripts/pacstrap.conf -K -i $mnt $package
 }
 
-def "main internal mkuser" [mnt: path, user: string, host_user: string] {
+def "main internal mkuser" [mnt: path, user: string, host_user: string, --no-password, --no-sudo] {
   assert-superuser
 
   log $"Creating user (ansi wb)($user)(ansi reset)"
   ^arch-chroot $mnt useradd --user-group --home-dir /home/($user) ($user)
-  log $"Setting password for user (ansi wb)($user)(ansi reset)"
-  ^arch-chroot $mnt passwd $user
 
-  log $"Adding to (ansi wb)sudo(ansi reset) group"
-  ^arch-chroot $mnt groupadd -f sudo
-  ^arch-chroot $mnt usermod -aG sudo $user
-  ^arch-chroot $mnt chown -R $"($user):($user)" $"/home/($user)"
+  if not $no_password {
+    log $"Setting password for user (ansi wb)($user)(ansi reset)"
+    ^arch-chroot $mnt passwd $user
+  }
+
+  if not $no_sudo {
+    log $"Adding to (ansi wb)sudo(ansi reset) group"
+    ^arch-chroot $mnt groupadd -f sudo
+    ^arch-chroot $mnt usermod -aG sudo $user
+    ^arch-chroot $mnt chown -R $"($user):($user)" $"/home/($user)"
+  }
 
   log "Setting shell"
   ^arch-chroot $mnt chsh -s /usr/bin/fish $user
@@ -180,24 +186,36 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
   ^arch-chroot $mnt ilum-boot install
 }
 
-def "main internal finalize" [mnt: path] {
+def "main internal finalize-coruscant" [mnt: path, user: string] {
+  log $"Installing the rest of the packages for (ansi wb)system-coruscant(ansi reset)"
+  ^arch-chroot -S -u $user $mnt paru -Syu system-coruscant
+
+  log $"Installing the rest of dotfiles"
+  ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && make cli"
+
+  log "Setting up bootloader"
+  ^arch-chroot $mnt coruscant-boot install
+}
+
+def "main internal finalize" [mnt: path, --root-password-hashed: string] {
   assert-superuser
 
   log "Generating fstab"
   ^genfstab -U $mnt o> $"($mnt)/etc/fstab"
   log "Generating locales"
   ^arch-chroot $mnt locale-gen
+
   log "Changing root password"
-  ^arch-chroot $mnt passwd
+  if ($root_password_hashed | is-empty) {
+    ^arch-chroot $mnt passwd
+  } else {
+    ^arch-chroot usermod -p $root_password_hashed root
+  }
 }
 
 # === Main commands
 
-def "main prepare" [pkgbuild_dir: path, db: path = "/var/cache/system-install-scripts/db", --build-user: string = "nobody"] {
-  main internal mkpacstrapdb $build_user $pkgbuild_dir $db
-}
-
-def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt", --create-user: string, --host-user: string --force] {
+def assert-args [bootdev: path, rootdev: path, mnt: path, create_user: string, host_user: string] {
   if not ($bootdev | path exists) {
     log $"Boot device doesn't exists: (ansi wb)($bootdev)(ansi reset)"
     exit 1
@@ -215,13 +233,41 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
     log $"Please specify a host user with `--create-user`"
     exit 1
   }
+}
 
-  main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force
-  main internal mount $bootdev $rootdev $mnt $create_user
+def "main prepare" [pkgbuild_dir: path, db: path = "/var/cache/system-install-scripts/db", --build-user: string = "nobody"] {
+  main internal mkpacstrapdb $build_user $pkgbuild_dir $db
+}
+
+def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt", --create-user: string, --host-user: string --force] {
+  assert-args $bootdev $rootdev $mnt $create_user $host_user
+
+  let subvolumes = [{vol: @var-flatpak, mnt: /var/lib/flatpak}];
+
+  main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes $subvolumes.vol
+  main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $subvolumes
   main internal mkswap $mnt
   main internal pacstrap $mnt system-base
   main internal mkuser $mnt $create_user $host_user
   main internal finalize-ilum $mnt $create_user
+  main internal finalize $mnt
+}
+
+def "main install-coruscant" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt", --create-user: string, --host-user: string, --force] {
+  assert-args $bootdev $rootdev $mnt $create_user $host_user
+
+  let mounted_subvolumes = [
+    {vol: @var-k3s, mnt: /var/lib/ranger/k3s},
+    {vol: @var-containerd, mnt: /var/lib/containerd},
+  ];
+  let more_subvolumes = [@volumes];
+
+  main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes ($mounted_subvolumes.vol ++ $more_subvolumes)
+  main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $mounted_subvolumes
+  main internal mkswap $mnt
+  main internal pacstrap $mnt system-base
+  main internal mkuser $mnt $create_user $host_user --no-password --no-sudo
+  main internal finalize-coruscant $mnt $create_user
   main internal finalize $mnt
 }
 
