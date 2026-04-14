@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.4.1
+pkgver=2.4.2
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -95,7 +95,7 @@ package() {
 }
 
 sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
-            '502a6494f9592acd7364f817d7ae952a4f2e8220930565b7eb15cedad1c1eb67'
+            'e4da347e54ed6e2071c0ba0b74e49ed6e48b522ae120d21fa12f9e8296ac1412'
             'ac0354c56a99295133737868e4fd9f52e16ca047adb3ba8d847a72875d9b1bee'
             '38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db'
             'a22b465ed7f43f8c7cc35747d51dac2445d103d6de8a6746a302955a348c22d6'
