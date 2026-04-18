@@ -28,8 +28,9 @@ def mkswappath [mnt: path] {
 def "main internal mkfs" [prefix: string, bootdev: path, rootdev: path, mnt: path, user: string, --force, --additional-subvolumes: list<path>] {
   assert-superuser
 
-  log $"Formatting (ansi wb)($bootdev)(ansi reset) as FAT32"
-  ^mkfs.vfat -F 32 -n $"($prefix)-bootfs" $bootdev
+  let fat_partlabel = ($prefix | str substring 0..3) + "-bootfs"
+  log $"Formatting (ansi wb)($bootdev)(ansi reset) as FAT32 with label (ansi wb)($fat_partlabel)(ansi reset)"
+  ^mkfs.vfat -F 32 -n $fat_partlabel $bootdev
 
   log $"Formatting (ansi wb)($rootdev)(ansi reset) as BTRFS"
   if $force {
