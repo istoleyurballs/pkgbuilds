@@ -1,6 +1,6 @@
 pkgbase = system-install-scripts
 	pkgdesc = System configuration install scripts
-	pkgver = 1.4.0
+	pkgver = 1.4.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	arch = any
@@ -10,7 +10,7 @@ pkgbase = system-install-scripts
 	depends = paru
 	source = system-install.nu
 	source = pacstrap.conf
-	sha256sums = 97f913280b650e5a0acbcc8de519529f0f20ca2c6a724ecc875f0024571fe834
+	sha256sums = e696d66d6da9fc7e10c69d2ac24c08cb909e9876dfb9e869c1654023ab687433
 	sha256sums = 07e99fbbdee2d71f4548522d91832fa000bc6a313a92935eb2fea8669ea1ab31
 
 pkgname = system-install-scripts

@@ -110,7 +110,7 @@ def "main internal mkpacstrapdb" [build_user: string, pkgbuild_dir: path, db: pa
     ^chmod -R 777 .
 
     dirs add (glob * | first)
-    ^sudo -u $build_user makepkg -c
+    ^sudo -u $build_user makepkg -sc
     mv *.pkg.tar.zst $db
 
     dirs drop
@@ -121,7 +121,7 @@ def "main internal mkpacstrapdb" [build_user: string, pkgbuild_dir: path, db: pa
     log $"Building local package at (ansi wb)($pkg)(ansi reset)"
 
     dirs add $pkg
-    ^sudo -u $build_user makepkg -c
+    ^sudo -u $build_user makepkg -sc
     mv *.pkg.tar.zst $db
     dirs drop
   }
