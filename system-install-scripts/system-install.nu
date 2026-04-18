@@ -150,7 +150,7 @@ def "main internal mkuser" [mnt: path, user: string, host_user: string, --no-pas
   assert-superuser
 
   log $"Creating user (ansi wb)($user)(ansi reset)"
-  ^arch-chroot $mnt useradd --user-group --home-dir /home/($user) ($user)
+  ^arch-chroot $mnt useradd --user-group --create-home --home-dir /home/($user) ($user)
 
   if not $no_password {
     log $"Setting password for user (ansi wb)($user)(ansi reset)"
