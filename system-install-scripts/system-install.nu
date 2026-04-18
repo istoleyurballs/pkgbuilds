@@ -157,7 +157,7 @@ def "main internal mkuser" [mnt: path, user: string, host_user: string, --no-pas
     ^arch-chroot $mnt passwd $user
   } else {
     log $"Locking user (ansi wb)($user)(ansi reset)"
-    ^arch-chroot $mnt passwd --remove --lock $user
+    ^arch-chroot $mnt passwd --delete --lock $user
   }
 
   ^arch-chroot $mnt groupadd -f sudo
@@ -194,7 +194,7 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
 
 def "main internal finalize-coruscant" [mnt: path, user: string, update_user: string] {
   log $"Temporary make user (ansi wb)($update_user)(ansi reset) passwordless"
-  ^arch-chroot $mnt passwd --remove --unlock $update_user
+  ^arch-chroot $mnt passwd --delete --unlock $update_user
 
   log $"Installing the rest of the packages for (ansi wb)system-coruscant(ansi reset)"
   ^arch-chroot -S -u $update_user $mnt paru -Syu system-coruscant
