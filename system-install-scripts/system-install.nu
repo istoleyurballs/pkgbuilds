@@ -3,7 +3,7 @@
 use std/dirs
 
 def log [message: string] {
-  print $"(ansi wb)[(ansi red_bold)ilum-install(ansi wb)](ansi reset) ($message)(ansi reset)"
+  print $"(ansi wb)[(ansi red_bold)system-install(ansi wb)](ansi reset) ($message)(ansi reset)"
 }
 
 def assert-superuser [] {
@@ -25,17 +25,17 @@ def mkswappath [mnt: path] {
 }
 
 # Given a boot and root partition, reformat them with appropriate filesystems and labels.
-def "main internal mkfs" [bootdev: path, rootdev: path, mnt: path, user: string, --force, --additional-subvolumes: list<path>] {
+def "main internal mkfs" [prefix: string, bootdev: path, rootdev: path, mnt: path, user: string, --force, --additional-subvolumes: list<path>] {
   assert-superuser
 
   log $"Formatting (ansi wb)($bootdev)(ansi reset) as FAT32"
-  ^mkfs.vfat -F 32 -n ilum-bootfs $bootdev
+  ^mkfs.vfat -F 32 -n $"($prefix)-bootfs" $bootdev
 
   log $"Formatting (ansi wb)($rootdev)(ansi reset) as BTRFS"
   if $force {
-    ^mkfs.btrfs --data single --metadata dup --label ilum-rootfs $rootdev --force
+    ^mkfs.btrfs --data single --metadata dup --label $"($prefix)-rootfs" $rootdev --force
   } else {
-    ^mkfs.btrfs --data single --metadata dup --label ilum-rootfs $rootdev
+    ^mkfs.btrfs --data single --metadata dup --label $"($prefix)-rootfs" $rootdev
   }
 
   log $"Creating subvolumes on (ansi wb)($rootdev)(ansi reset)"
@@ -104,7 +104,7 @@ def "main internal mkpacstrapdb" [build_user: string, pkgbuild_dir: path, db: pa
   def makepkg-aur-append [pkg: string] {
     log $"Building AUR package (ansi wb)($pkg)(ansi reset)"
     
-    let dir = mktemp --directory $"system-install-ilum.($pkg).XXXXX"
+    let dir = mktemp --directory $"system-install.($pkg).XXXXX"
     dirs add $dir
     ^paru -G $pkg
     ^chmod -R 777 .
@@ -246,7 +246,7 @@ def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt",
 
   let subvolumes = [{vol: @var-flatpak, mnt: /var/lib/flatpak}];
 
-  main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes $subvolumes.vol
+  main internal mkfs ilum $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes $subvolumes.vol
   main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $subvolumes
   main internal mkswap $mnt
   main internal pacstrap $mnt system-base
@@ -264,7 +264,7 @@ def "main install-coruscant" [--bootdev: path, --rootdev: path, --mnt: path = "/
   ];
   let more_subvolumes = [@apps];
 
-  main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes ($mounted_subvolumes.vol ++ $more_subvolumes)
+  main internal mkfs coruscant $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes ($mounted_subvolumes.vol ++ $more_subvolumes)
   main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $mounted_subvolumes
   main internal mkswap $mnt
   main internal pacstrap $mnt system-base
