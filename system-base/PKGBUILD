@@ -1,5 +1,5 @@
 pkgname=system-base
-pkgver=2.1.1
+pkgver=2.1.2
 pkgrel=1
 
 pkgdesc='System configuration base'
@@ -15,7 +15,7 @@ depends=(
   'reflector' 'pacman-contrib' 'pacutils' 'smartmontools' 'powertop'
   'archpatch'
   # AUR
-  'base-devel' 'devtools' 'paru'
+  'base-devel' 'paru'
   # Dotfiles
   'stow'
 

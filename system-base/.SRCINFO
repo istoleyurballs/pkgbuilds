@@ -1,6 +1,6 @@
 pkgbase = system-base
 	pkgdesc = System configuration base
-	pkgver = 2.1.1
+	pkgver = 2.1.2
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-base.install
@@ -19,7 +19,6 @@ pkgbase = system-base
 	depends = powertop
 	depends = archpatch
 	depends = base-devel
-	depends = devtools
 	depends = paru
 	depends = stow
 	depends = intel-ucode
