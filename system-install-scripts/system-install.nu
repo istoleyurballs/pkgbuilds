@@ -155,11 +155,14 @@ def "main internal mkuser" [mnt: path, user: string, host_user: string, --no-pas
   if not $no_password {
     log $"Setting password for user (ansi wb)($user)(ansi reset)"
     ^arch-chroot $mnt passwd $user
+  } else {
+    log $"Locking user (ansi wb)($user)(ansi reset)"
+    ^arch-chroot $mnt passwd --remove --lock $user
   }
 
+  ^arch-chroot $mnt groupadd -f sudo
   if not $no_sudo {
     log $"Adding to (ansi wb)sudo(ansi reset) group"
-    ^arch-chroot $mnt groupadd -f sudo
     ^arch-chroot $mnt usermod -aG sudo $user
   }
 
@@ -189,17 +192,14 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
   ^arch-chroot $mnt ilum-boot install
 }
 
-def "main internal finalize-coruscant" [mnt: path, user: string] {
-  let update_user = "coruscant-update"
-  log $"Creating system user (ansi wb)($update_user)(ansi reset)"
-  ^arch-chroot $mnt useradd --system --create-home --groups sudo $update_user
-  log $"Temporary password for user (ansi wb)($update_user)(ansi reset)"
-  ^arch-chroot $mnt passwd $update_user
+def "main internal finalize-coruscant" [mnt: path, user: string, update_user: string] {
+  log $"Temporary make user (ansi wb)($update_user)(ansi reset) passwordless"
+  ^arch-chroot $mnt passwd --remove --unlock $update_user
 
   log $"Installing the rest of the packages for (ansi wb)system-coruscant(ansi reset)"
   ^arch-chroot -S -u $update_user $mnt paru -Syu system-coruscant
 
-  log $"Removing password and locking user (ansi wb)($update_user)(ansi reset)"
+  log $"Relocking user (ansi wb)($update_user)(ansi reset)"
   ^arch-chroot $mnt passwd --delete --lock $update_user
 
   log $"Installing the rest of dotfiles"
@@ -274,12 +274,15 @@ def "main install-coruscant" [--bootdev: path, --rootdev: path, --mnt: path = "/
   ];
   let more_subvolumes = [@apps];
 
+  let update_user = "coruscant-update"
+
   main internal mkfs coruscant $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes ($mounted_subvolumes.vol ++ $more_subvolumes)
   main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $mounted_subvolumes
   main internal mkswap $mnt
   main internal pacstrap $mnt system-base
   main internal mkuser $mnt $create_user $host_user --no-password --no-sudo
-  main internal finalize-coruscant $mnt $create_user
+  main internal mkuser $mnt $update_user $host_user --no-password
+  main internal finalize-coruscant $mnt $create_user $update_user
   main internal finalize $mnt
 }
 
