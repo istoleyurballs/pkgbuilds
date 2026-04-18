@@ -1,5 +1,5 @@
 pkgname=system-coruscant
-pkgver=1.2.1
+pkgver=1.2.2
 pkgrel=1
 
 pkgdesc='System configuration for coruscant'
@@ -16,7 +16,7 @@ depends=(
 
   # Container stuff
   'podman' 'podman-compose'
-  'k3s' 'kubectl' 'k9s'
+  'k3s-bin' 'kubectl' 'k9s'
 
   # Media
   'imagemagick' 'ffmpeg' 'aria2'
