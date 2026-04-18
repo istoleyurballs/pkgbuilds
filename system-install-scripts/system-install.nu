@@ -43,7 +43,7 @@ def "main internal mkfs" [prefix: string, bootdev: path, rootdev: path, mnt: pat
   ^mount --mkdir -t btrfs $rootdev $mnt
   dirs add $mnt
 
-  let user_subvol = $"@home-($user | str kebab-case)"
+  let user_subvol = "@home-" + ($user | str kebab-case)
   ^btrfs subvolume create @ $user_subvol @var-log @swap ...$additional_subvolumes
   ^btrfs subvolume sync .
   ^btrfs property set @ compression zstd
