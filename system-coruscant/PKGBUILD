@@ -1,5 +1,5 @@
 pkgname=system-coruscant
-pkgver=1.2.0
+pkgver=1.2.1
 pkgrel=1
 
 pkgdesc='System configuration for coruscant'
@@ -15,7 +15,7 @@ depends=(
   'vulkan-intel' 'intel-media-driver'
 
   # Container stuff
-  'podman' 'podman-compse'
+  'podman' 'podman-compose'
   'k3s' 'kubectl' 'k9s'
 
   # Media

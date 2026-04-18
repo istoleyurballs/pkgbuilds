@@ -1,6 +1,6 @@
 pkgbase = system-coruscant
 	pkgdesc = System configuration for coruscant
-	pkgver = 1.2.0
+	pkgver = 1.2.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-coruscant.install
@@ -10,7 +10,7 @@ pkgbase = system-coruscant
 	depends = vulkan-intel
 	depends = intel-media-driver
 	depends = podman
-	depends = podman-compse
+	depends = podman-compose
 	depends = k3s
 	depends = kubectl
 	depends = k9s
