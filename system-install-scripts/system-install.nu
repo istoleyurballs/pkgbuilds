@@ -190,8 +190,17 @@ def "main internal finalize-ilum" [mnt: path, user: string] {
 }
 
 def "main internal finalize-coruscant" [mnt: path, user: string] {
+  let update_user = "coruscant-update"
+  log $"Creating system user (ansi wb)($update_user)(ansi reset)"
+  ^arch-chroot $mnt useradd --system --create-home --groups sudo $update_user
+  log $"Temporary password for user (ansi wb)($update_user)(ansi reset)"
+  ^arch-chroot $mnt passwd $update_user
+
   log $"Installing the rest of the packages for (ansi wb)system-coruscant(ansi reset)"
-  ^arch-chroot -S -u $user $mnt paru -Syu system-coruscant
+  ^arch-chroot -S -u $update_user $mnt paru -Syu system-coruscant
+
+  log $"Removing password and locking user (ansi wb)($update_user)(ansi reset)"
+  ^arch-chroot $mnt passwd --delete --lock $update_user
 
   log $"Installing the rest of dotfiles"
   ^arch-chroot -S -u $user $mnt bash -c $"cd /home/($user)/dotfiles && make cli"
