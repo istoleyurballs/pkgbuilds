@@ -260,7 +260,7 @@ def "main install-coruscant" [--bootdev: path, --rootdev: path, --mnt: path = "/
     {vol: @var-k3s, mnt: /var/lib/ranger/k3s},
     {vol: @var-containerd, mnt: /var/lib/containerd},
   ];
-  let more_subvolumes = [@volumes];
+  let more_subvolumes = [@apps];
 
   main internal mkfs $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes ($mounted_subvolumes.vol ++ $more_subvolumes)
   main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $mounted_subvolumes
