@@ -1,5 +1,5 @@
 pkgname=system-coruscant
-pkgver=1.2.3
+pkgver=1.2.4
 pkgrel=1
 
 pkgdesc='System configuration for coruscant'
@@ -52,7 +52,7 @@ package() {
 
   # Boot
   install -Dm0755 coruscant-boot.nu "$pkgdir"/usr/bin/coruscant-boot
-  isntall -Dm0644 cmdline.d-coruscant.conf "$pkgdir"/etc/cmdline.d/coruscant.conf
+  install -Dm0644 cmdline.d-coruscant.conf "$pkgdir"/etc/cmdline.d/coruscant.conf
 
   # Patches
   install -Dm0644 sshd_config.patch "$pkgdir"/usr/share/archpatch/patches/etc-ssh-sshd_config.patch
