@@ -160,8 +160,10 @@ def "main internal mkuser" [mnt: path, user: string, host_user: string, --no-pas
     log $"Adding to (ansi wb)sudo(ansi reset) group"
     ^arch-chroot $mnt groupadd -f sudo
     ^arch-chroot $mnt usermod -aG sudo $user
-    ^arch-chroot $mnt chown -R $"($user):($user)" $"/home/($user)"
   }
+
+  log "Setting correct permissions on home folder"
+  ^arch-chroot $mnt chown -R $"($user):($user)" $"/home/($user)"
 
   log "Setting shell"
   ^arch-chroot $mnt chsh -s /usr/bin/fish $user
