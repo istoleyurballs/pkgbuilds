@@ -1,6 +1,6 @@
 pkgbase = system-coruscant
 	pkgdesc = System configuration for coruscant
-	pkgver = 1.1.1
+	pkgver = 1.1.2
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-coruscant.install

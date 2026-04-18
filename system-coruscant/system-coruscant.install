@@ -1,7 +1,7 @@
 function __do_the_thing() {
   echo "Enabling btrfs-scrub k3s sshd"
   systemctl enable --now \
-    btrfs-scrub@-.timer \
+    btrfs-scrub@mnt-rootfs.timer \
     btrfs-scrub@mnt-lucastrunk.timer \
     k3s.service \
     sshd.service
