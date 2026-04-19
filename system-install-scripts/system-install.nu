@@ -281,7 +281,7 @@ def "main install-coruscant" [--bootdev: path, --rootdev: path, --mnt: path = "/
   main internal mkswap $mnt
   main internal pacstrap $mnt system-base
   main internal mkuser $mnt $create_user $host_user --no-password --no-sudo
-  main internal mkuser $mnt $update_user $host_user --no-password
+  main internal mkuser $mnt $update_user $host_user --no-password --no-sudo
   main internal finalize-coruscant $mnt $create_user $update_user
   main internal finalize $mnt
 }
