@@ -1,5 +1,5 @@
 pkgname=system-coruscant
-pkgver=1.2.5
+pkgver=1.2.6
 pkgrel=1
 
 pkgdesc='System configuration for coruscant'
@@ -28,9 +28,10 @@ source=(
   'coruscant-boot.nu'
   'mkinitcpio.d-linux.preset'
   'cmdline.d-coruscant.conf'
-  'sshd_config.patch'
+  'sshd_config.d-coruscant.conf'
   'authorized_keys-root'
   'authorized_keys-lucas'
+  'k3s-config.yaml'
 )
 install='system-coruscant.install'
 
@@ -57,11 +58,14 @@ package() {
   install -Dm0644 mkinitcpio.d-linux.preset "$pkgdir"/etc/mkinitcpio.d/linux.preset
 
   # Patches
-  install -Dm0644 sshd_config.patch "$pkgdir"/usr/share/archpatch/patches/etc-ssh-sshd_config.patch
 
-  # SSH authorized keys keys
+  # SSH config & authorized keys
+  install -Dm0644 sshd_config.d-coruscant.conf "$pkgdir"/etc/ssh/sshd_config.d/99-coruscant.conf
   install -Dm0644 authorized_keys-root "$pkgdir"/etc/ssh/authorized_keys.d/root
   install -Dm0644 authorized_keys-lucas "$pkgdir"/etc/ssh/authorized_keys.d/lucas
+
+  # K3s
+  install -Dm0644 k3s-config.yaml "$pkgdir"/etc/rancher/k3s/config.yaml
 }
 
 sha256sums=('69c16e06ed9bd5dc608d50c03fc4911c57e0d997f19cb758fce7f3095dd21edf'
@@ -69,6 +73,7 @@ sha256sums=('69c16e06ed9bd5dc608d50c03fc4911c57e0d997f19cb758fce7f3095dd21edf'
             '2495189ae65a95a89724bc996131f539a9fdf72e3a55f85cef935c8f87ffc665'
             '38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db'
             'f59451827d31d56ad8bf5764f22c6e900e81683eb835c561edeb3641da83ea20'
-            'c7626b080484e2d4badbd30cf671d5604a8e2e6caa9ff86c34681b95476df29d'
+            '3dbae6cf9a2d9ea4122bb727a22be37689bfa90557e304858de3054e8fcd2ecf'
             '0dc94b71f47b58efb2b1763b176599657f65272d9e0f5449b02e4a3a58e9ce2e'
-            'f79ff706b2e3d873e29a78b5ea0011ef99025ae260e9fad8c0c663dd80dda0ee')
+            'f79ff706b2e3d873e29a78b5ea0011ef99025ae260e9fad8c0c663dd80dda0ee'
+            '99f018cbd3ca38af5ba2136beff882c9ac0ae46d9a7c7282e60fa0a222f61462')
