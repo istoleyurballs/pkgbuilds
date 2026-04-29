@@ -1,6 +1,6 @@
 pkgbase = system-coruscant
 	pkgdesc = System configuration for coruscant
-	pkgver = 1.2.7
+	pkgver = 1.2.8
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-coruscant.install
@@ -32,8 +32,8 @@ pkgbase = system-coruscant
 	sha256sums = 38cfe7a651d156c35a258b67a8644435521b221a5b6418fa01d17f7b5beda6db
 	sha256sums = f59451827d31d56ad8bf5764f22c6e900e81683eb835c561edeb3641da83ea20
 	sha256sums = a006200389112dfeb18ebd31b8eced307663f62685bdc14568073f5289395920
-	sha256sums = 0dc94b71f47b58efb2b1763b176599657f65272d9e0f5449b02e4a3a58e9ce2e
-	sha256sums = f79ff706b2e3d873e29a78b5ea0011ef99025ae260e9fad8c0c663dd80dda0ee
+	sha256sums = 5eccb5b158f39e4634cc7a07efd643a1121fff3d37c6bf255c239e720e9fab39
+	sha256sums = 3ef6f47e3c0c520191537055e7fddce85bc319daed5fbf871d6e4bb7c928a759
 	sha256sums = 99f018cbd3ca38af5ba2136beff882c9ac0ae46d9a7c7282e60fa0a222f61462
 
 pkgname = system-coruscant
