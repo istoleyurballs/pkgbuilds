@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.4.3
+pkgver=2.5.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -55,6 +55,8 @@ source=(
   'hyprland-gaming-uwsm.desktop'
   'hyprland-tv-hdr.desktop'
   'hyprland-tv-hdr-uwsm.desktop'
+  'hyprland-tv-sdr.desktop'
+  'hyprland-tv-sdr-uwsm.desktop'
   'ilum-flatpak.nu'
 )
 install='system-ilum.install'
@@ -89,6 +91,8 @@ package() {
   install -Dm0644 hyprland-gaming-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-gaming-uwsm.desktop
   install -Dm0644 hyprland-tv-hdr.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr.desktop
   install -Dm0644 hyprland-tv-hdr-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-hdr-uwsm.desktop
+  install -Dm0644 hyprland-tv-sdr.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-sdr.desktop
+  install -Dm0644 hyprland-tv-sdr-uwsm.desktop "$pkgdir"/usr/share/wayland-sessions/hyprland-tv-sdr-uwsm.desktop
 
   # Flatpak
   install -Dm0755 ilum-flatpak.nu "$pkgdir"/usr/bin/ilum-flatpak
@@ -104,4 +108,6 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             '0d8be9e4ff9faf6b550dc821bf26a1ebffc8186ddcf7830ceffb9574c8454308'
             '8ed5cbbae1ac4d96771a5e1462f402d481101012f127a5b1ce8f19faa3bb97f7'
             '87ceee17f47f0adf1e4a8a8a4ca0f732eb74f8799e6bf9905ec07cc3f7ba3522'
+            '2bd282e579ac704ff6964aa2c14da76180510106469dca347033dadbe4d4eed2'
+            'a17495425b995ff1496eba5dd0030c48a2143e0fb77151005932169b2256ce16'
             'c9de630e8528253da1b0a9feda75951f839fb109e8bad2d54f7368c5c815aaef')
