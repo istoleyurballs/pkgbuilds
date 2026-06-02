@@ -9,7 +9,7 @@ Type=notify
 EnvironmentFile=/etc/systemd/system/k3s-agent.service.env
 ExecStartPre=-/sbin/modprobe br_netfilter
 ExecStartPre=-/sbin/modprobe overlay
-ExecStart=/usr/bin/k3s agent
+ExecStart=/usr/bin/k3s agent --disable-apiserver-lb
 KillMode=process
 Delegate=yes
 # Having non-zero Limits causes performance problems due to accounting overhead

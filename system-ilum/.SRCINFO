@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.6.0
+	pkgver = 2.6.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
@@ -86,7 +86,7 @@ pkgbase = system-ilum
 	sha256sums = 2bd282e579ac704ff6964aa2c14da76180510106469dca347033dadbe4d4eed2
 	sha256sums = a17495425b995ff1496eba5dd0030c48a2143e0fb77151005932169b2256ce16
 	sha256sums = c9de630e8528253da1b0a9feda75951f839fb109e8bad2d54f7368c5c815aaef
-	sha256sums = 40efb2df00ad0eef258ab49a2e40ec5809ae4c61a7eea4b259a3d636790ba5ac
-	sha256sums = 506246c1240e53d6441fe19f027b561f0fa0f2bfa5edca47e63a4f57b6b15564
+	sha256sums = 7df35658a1564cde3340bcabd2d6a696e955067fe1e6df1405eb0990472c3b90
+	sha256sums = d05efcfaedfd4ecc4641fd8b88348ef051d0b0e828f795bb89682f7194ab371b
 
 pkgname = system-ilum
