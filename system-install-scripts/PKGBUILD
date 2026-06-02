@@ -1,5 +1,5 @@
 pkgname=system-install-scripts
-pkgver=1.5.3
+pkgver=1.5.4
 pkgrel=1
 
 pkgdesc='System configuration install scripts'
@@ -21,5 +21,5 @@ package() {
   mkdir -p "$pkgdir"/var/cache/"$pkgname"
 }
 
-sha256sums=('a99a02c5600ba8118428ebb2a8b15fd8b555a107650101958c1ddb2e0805f3f7'
+sha256sums=('293c0acf5167b9f98a01ca6f3d5f082d6ef5df235823ba294688a10961581633'
             '07e99fbbdee2d71f4548522d91832fa000bc6a313a92935eb2fea8669ea1ab31')

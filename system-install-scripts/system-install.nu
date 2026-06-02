@@ -254,7 +254,11 @@ def "main prepare" [pkgbuild_dir: path, db: path = "/var/cache/system-install-sc
 def "main install-ilum" [--bootdev: path, --rootdev: path, --mnt: path = "/mnt", --create-user: string, --host-user: string --force] {
   assert-args $bootdev $rootdev $mnt $create_user $host_user
 
-  let subvolumes = [{vol: @var-flatpak, mnt: /var/lib/flatpak}];
+  let subvolumes = [
+    {vol: @var-flatpak, mnt: /var/lib/flatpak},
+    {vol: @var-k3s, mnt: /var/lib/ranger/k3s},
+    {vol: @var-containerd, mnt: /var/lib/containerd},
+  ];
 
   main internal mkfs ilum $bootdev $rootdev $mnt $create_user --force=$force --additional-subvolumes $subvolumes.vol
   main internal mount $bootdev $rootdev $mnt $create_user --additional-mounts $subvolumes
