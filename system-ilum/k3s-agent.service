@@ -1,0 +1,27 @@
+# Slightly modfied version of the service file that comes with k3s-bin on the AUR.
+[Unit]
+Description=Lightweight Kubernetes
+Documentation=https://k3s.io
+After=network-online.target
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/systemd/system/k3s-agent.service.env
+ExecStartPre=-/sbin/modprobe br_netfilter
+ExecStartPre=-/sbin/modprobe overlay
+ExecStart=/usr/bin/k3s agent
+KillMode=process
+Delegate=yes
+# Having non-zero Limits causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+# See https://github.com/k3s-io/k3s/commit/b4335630b78b5cf927e79724067803a6c0d7c04f
+LimitNOFILE=1048576
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+TimeoutStartSec=0
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

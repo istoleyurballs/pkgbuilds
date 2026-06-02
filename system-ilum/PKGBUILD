@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.5.0
+pkgver=2.6.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -42,6 +42,9 @@ depends=(
   # Bit random
   'nwg-look' 'papirus-icon-theme' 'brightnessctl' 'wev'
   'vulkan-caps-viewer-wayland' 'imagemagick' 'ffmpeg'
+
+  # = Cluster setup
+  'k3s-bin'
 )
 
 source=(
@@ -58,8 +61,12 @@ source=(
   'hyprland-tv-sdr.desktop'
   'hyprland-tv-sdr-uwsm.desktop'
   'ilum-flatpak.nu'
+  'k3s-agent.service'
+  'k3s-agent.service.env'
 )
 install='system-ilum.install'
+
+backup=('etc/systemd/system/k3s-agent.service.env')
 
 package() {
   # Mountpoints for various things
@@ -96,6 +103,10 @@ package() {
 
   # Flatpak
   install -Dm0755 ilum-flatpak.nu "$pkgdir"/usr/bin/ilum-flatpak
+
+  # K3s
+  install -Dm0644 k3s-agent.service "$pkgdir"/usr/lib/systemd/system/k3s-agent.service
+  install -Dm0400 k3s-agent.service.env "$pkgdir"/etc/systemd/system/k3s-agent.service.env
 }
 
 sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
@@ -110,4 +121,6 @@ sha256sums=('5a93eced3b28435ffbd7ac8450c4a3dedcb7d49f793c81a3afe68dc45c49d35a'
             '87ceee17f47f0adf1e4a8a8a4ca0f732eb74f8799e6bf9905ec07cc3f7ba3522'
             '2bd282e579ac704ff6964aa2c14da76180510106469dca347033dadbe4d4eed2'
             'a17495425b995ff1496eba5dd0030c48a2143e0fb77151005932169b2256ce16'
-            'c9de630e8528253da1b0a9feda75951f839fb109e8bad2d54f7368c5c815aaef')
+            'c9de630e8528253da1b0a9feda75951f839fb109e8bad2d54f7368c5c815aaef'
+            '40efb2df00ad0eef258ab49a2e40ec5809ae4c61a7eea4b259a3d636790ba5ac'
+            '506246c1240e53d6441fe19f027b561f0fa0f2bfa5edca47e63a4f57b6b15564')
