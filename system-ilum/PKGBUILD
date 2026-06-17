@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.6.1
+pkgver=2.7.0
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -21,7 +21,7 @@ depends=(
   # Session Manager
   'uwsm' 'libnewt'
   # Window Manager & friends
-  'hyprland' 'hyprpolkitagent' 'hyprlock' 'hyprpaper' 'hyprsunset' 'hyprshutdown'
+  'hyprland' 'hyprpolkitagent' 'noctalia-shell' 'hyprsunset' 'hyprshutdown'
   # Screenshot
   'hyprshot' 'xdg-desktop-portal-hyprland'
   'hyprpicker' 'qt5-wayland'
@@ -44,7 +44,7 @@ depends=(
   'vulkan-caps-viewer-wayland' 'imagemagick' 'ffmpeg'
 
   # = Cluster setup
-  'k3s-bin'
+  'k3s-bin' 'nvidia-container-toolkit'
 )
 
 source=(
