@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.7.0
+	pkgver = 2.7.1
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
@@ -23,9 +23,6 @@ pkgbase = system-ilum
 	depends = xdg-desktop-portal-hyprland
 	depends = hyprpicker
 	depends = qt5-wayland
-	depends = waybar
-	depends = dunst
-	depends = rofi-wayland
 	depends = alacritty
 	depends = ranger
 	depends = feh
