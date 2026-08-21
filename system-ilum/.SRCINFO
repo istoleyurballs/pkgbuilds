@@ -1,6 +1,6 @@
 pkgbase = system-ilum
 	pkgdesc = System configuration for ilum
-	pkgver = 2.7.1
+	pkgver = 2.7.2
 	pkgrel = 1
 	url = https://github.com/istoleyurballs/pkgbuilds
 	install = system-ilum.install
@@ -16,7 +16,7 @@ pkgbase = system-ilum
 	depends = libnewt
 	depends = hyprland
 	depends = hyprpolkitagent
-	depends = noctalia-shell
+	depends = noctalia
 	depends = hyprsunset
 	depends = hyprshutdown
 	depends = hyprshot

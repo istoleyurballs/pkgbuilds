@@ -1,5 +1,5 @@
 pkgname=system-ilum
-pkgver=2.7.1
+pkgver=2.7.2
 pkgrel=1
 
 pkgdesc='System configuration for ilum'
@@ -21,7 +21,7 @@ depends=(
   # Session Manager
   'uwsm' 'libnewt'
   # Window Manager & friends
-  'hyprland' 'hyprpolkitagent' 'noctalia-shell' 'hyprsunset' 'hyprshutdown'
+  'hyprland' 'hyprpolkitagent' 'noctalia' 'hyprsunset' 'hyprshutdown'
   # Screenshot
   'hyprshot' 'xdg-desktop-portal-hyprland'
   'hyprpicker' 'qt5-wayland'
